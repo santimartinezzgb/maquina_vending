@@ -8,9 +8,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Pixelify+Sans:wght@400..700&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="/renderer/styles.css" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>COCA-COLA VENDING MACHINE</title>
-    <script src="index.js"></script>
+    <script src="index.mjs"></script>
 </head>
 
 <body id="cuerpo">
@@ -22,10 +22,10 @@
         <section id="izquierda-maquina">
 
             <!-- Imagen de cocacola -->
-            <img id="imagen-cocacola" src="/assets/images/cocacola.jpg" />
+            <img id="imagen-cocacola" src="../assets/images/cocacola.jpg" />
 
             <!-- Logo de cocacola -->
-            <img id="imagen-logo-cocacola" src="/assets/images/cocacolaMarca.jpg" />
+            <img id="imagen-logo-cocacola" src="../assets/images/cocacolaMarca.jpg" />
 
         </section>
 
@@ -40,15 +40,15 @@
 
             <!-- 1ª fila de bebidas -->
             <div id="grupo_bebidas">
-                <button id="coca_cola" class="btn_bebida"><img src="/assets/images/COCA-COLA.png"
+                <button id="coca_cola" class="btn_bebida"><img src="../assets/images/COCA-COLA.png"
                         alt="Coca Cola"></button>
-                <button id="coca_cola_zero" class="btn_bebida"><img src="/assets/images/COCA-COLA_ZERO.png"
+                <button id="coca_cola_zero" class="btn_bebida"><img src="../assets/images/COCA-COLA_ZERO.png"
                         alt="Coca Cola Zero"></button>
-                <button id="coca_cola_light" class="btn_bebida"><img src="/assets/images/COCA-COLA_LIGHT.png"
+                <button id="coca_cola_light" class="btn_bebida"><img src="../assets/images/COCA-COLA_LIGHT.png"
                         alt="Coca Cola Light"></button>
-                <button id="sprite" class="btn_bebida"><img src="/assets/images/SPRITE.png" alt="Sprite"></button>
-                <button id="fanta" class="btn_bebida"><img src="/assets/images/FANTA.png" alt="Fanta"></button>
-                <button id="nestea" class="btn_bebida"><img src="/assets/images/NESTEA.png" alt="Nestea"></button>
+                <button id="sprite" class="btn_bebida"><img src="../assets/images/SPRITE.png" alt="Sprite"></button>
+                <button id="fanta" class="btn_bebida"><img src="../assets/images/FANTA.png" alt="Fanta"></button>
+                <button id="nestea" class="btn_bebida"><img src="../assets/images/NESTEA.png" alt="Nestea"></button>
 
                 <section id="insercion_dinero">
                     <button id="monedas"></button>
@@ -71,13 +71,13 @@
         <h1 id="titulo_menu">MENÚ</h1>
 
         <!-- Botón para introducir dinero -->
-        <button class="btn_menu">Introducir dinero</button>
+        <button id="btn_introductir_dinero" class="btn_menu">Introducir dinero</button>
 
         <!-- Botón para abrir la máquina -->
-        <button class="btn_menu">Abrir máquina</button>
+        <button id="btn_abrir_maquina" class="btn_menu">Abrir máquina</button>
 
         <!-- Botón para salir del programa -->
-        <button class="btn_menu">Salir</button>
+        <button id="btn_salir" class="btn_menu">Salir</button>
 
     </div>
 

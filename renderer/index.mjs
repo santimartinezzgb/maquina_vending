@@ -1,1 +1,5 @@
-console.log(window.api.saludo());
+let btn_salir = document.getElementById('btn_salir')
+
+btn_salir.onCLick = () => {
+    window.close();
+}

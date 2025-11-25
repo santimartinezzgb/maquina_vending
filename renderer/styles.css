@@ -173,7 +173,6 @@
 
 #expulsor_bebidas {
     width: 300px;
-    border-radius: 10px;
     height: 80px;
 
     background-color: rgb(185, 185, 185);
@@ -219,6 +218,7 @@
 
 .btn_menu:hover {
     transform: scale(1.05);
+    cursor: pointer;
 
     border-color: white;
     border-width: 10px;
