@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="/renderer/styles.css" />
+    <title>COCA-COLA VENDING MACHINE</title>
+    <script src="index.js"></script>
+</head>
+
+<body id="cuerpo">
+
+    <!-- MÁQUINA -->
+    <div id="maquina">
+
+        <!-- Mitad derecha de la máquina -->
+        <section id="izquierda-maquina">
+
+            <!-- Imagen de cocacola -->
+            <img id="imagen-cocacola" src="/assets/images/cocacola.jpg" />
+
+            <!-- Logo de cocacola -->
+            <img id="imagen-logo-cocacola" src="/assets/images/cocacolaMarca.jpg" />
+
+        </section>
+
+        <!-- Mitad derecha de la máquina -->
+        <section id="derecha_maquina">
+
+            <!-- Pantalla principal -->
+            <div id="pantalla_principal">
+                Seleccionar bebida
+
+            </div>
+
+            <!-- 1ª fila de bebidas -->
+            <div id="grupo_bebidas">
+                <button id="coca_cola" class="btn_bebida"><img src="/assets/images/COCA-COLA.png"
+                        alt="Coca Cola"></button>
+                <button id="coca_cola_zero" class="btn_bebida"><img src="/assets/images/COCA-COLA_ZERO.png"
+                        alt="Coca Cola Zero"></button>
+                <button id="coca_cola_light" class="btn_bebida"><img src="/assets/images/COCA-COLA_LIGHT.png"
+                        alt="Coca Cola Light"></button>
+                <button id="sprite" class="btn_bebida"><img src="/assets/images/SPRITE.png" alt="Sprite"></button>
+                <button id="fanta" class="btn_bebida"><img src="/assets/images/FANTA.png" alt="Fanta"></button>
+                <button id="nestea" class="btn_bebida"><img src="/assets/images/NESTEA.png" alt="Nestea"></button>
+
+                <section id="insercion_dinero">
+                    <button id="monedas"></button>
+                    <button id="billetes"></button>
+                </section>
+            </div>
+
+
+            <!-- Recoger bebidas -->
+            <div id="expulsor_bebidas">Recoger bebida</div>
+
+        </section>
+
+    </div>
+
+
+    <!-- MENÚ -->
+    <div id="menu">
+
+        <h1 id="titulo_menu">MENÚ</h1>
+
+        <!-- Botón para introducir dinero -->
+        <button class="btn_menu">Introducir dinero</button>
+
+        <!-- Botón para abrir la máquina -->
+        <button class="btn_menu">Abrir máquina</button>
+
+        <!-- Botón para salir del programa -->
+        <button class="btn_menu">Salir</button>
+
+    </div>
+
+</body>
+
+</html>

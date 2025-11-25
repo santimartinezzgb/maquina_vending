@@ -1,0 +1,241 @@
+#cuerpo {
+    width: auto;
+    height: auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 100px;
+    font-family: "Pixelify Sans", sans-serif;
+
+    background-color: black;
+
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+}
+
+/* ================= MÁQUINA DE VENDING ================= */
+#maquina {
+    display: flex;
+
+    background-color: #DF0A1C;
+    border-color: white;
+
+    width: 1000px;
+    height: 850px;
+
+    border-width: 10px;
+    border-style: solid;
+    border-radius: 10px;
+}
+
+/* ====== IZQUIERDA MÁQUINA*/
+
+#izquierda-maquina {
+    width: 350px;
+    height: 850px;
+    border-right: 10px solid white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 160px;
+}
+
+#imagen-cocacola {
+    width: 250px;
+
+    margin-top: 30px;
+
+    border-width: 10px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+}
+
+#imagen-logo-cocacola {
+    width: 500px;
+    transform: rotate(-90deg);
+
+}
+
+/* ====== DERECHA MÁQUINA*/
+#derecha_maquina {
+    width: 650px;
+    height: 850px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+}
+
+#pantalla_principal {
+    width: 500px;
+    border-radius: 10px;
+    height: 200px;
+
+    background-color: white;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 70px;
+}
+
+/* ========== GRUPO BEBIDAS ==========*/
+#grupo_bebidas {
+    display: grid;
+    grid-template-columns: 4;
+    grid-template-rows: 2;
+    gap: 50px;
+}
+
+#coca_cola {
+    grid-column-start: 0;
+    grid-column-end: 1;
+
+    grid-row-start: 0;
+    grid-row-end: 1;
+}
+
+#coca_cola_zero {
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    grid-row-start: 0;
+    grid-row-end: 1;
+}
+
+#coca_cola_light {
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    grid-row-start: 0;
+    grid-row-end: 1;
+}
+
+#sprite {
+    grid-column-start: 0;
+    grid-column-end: 1;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#fanta {
+    grid-column-start: 1;
+    grid-column-end: 2;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#nestea {
+    grid-column-start: 2;
+    grid-column-end: 3;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+#insercion_dinero {
+    grid-column-start: 3;
+    grid-column-end: 4;
+
+    grid-row-start: 0;
+    grid-row-end: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+#monedas {
+    width: 50px;
+    height: 50px;
+    border-radius: 30px;
+}
+
+#billetes {
+    width: 50px;
+    height: 20px;
+}
+
+#monedas:hover,
+#billetes:hover {
+    cursor: pointer;
+    background-color: yellow;
+}
+
+/* =============================================== */
+
+
+#expulsor_bebidas {
+    width: 300px;
+    border-radius: 10px;
+    height: 80px;
+
+    background-color: rgb(185, 185, 185);
+    border-width: 10px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+
+    text-align: center;
+    align-content: center;
+    font-size: 30px;
+}
+
+/* ================= MENÚ INTERACTIVO ================= */
+#menu {
+    color: white;
+    width: 600px;
+    font-family: "Pixelify Sans", sans-serif;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#titulo_menu {
+    font-size: 100px;
+}
+
+.btn_menu {
+    width: 400px;
+    height: 100px;
+    font-size: 40px;
+    font-family: "Pixelify Sans", sans-serif;
+
+    background-color: white;
+    border-radius: 10px;
+
+    transition: all;
+}
+
+.btn_menu:hover {
+    transform: scale(1.05);
+
+    border-color: white;
+    border-width: 10px;
+
+    background-color: black;
+    color: white;
+}
+
+.btn_bebida {
+    border-width: 10px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+    transition: all;
+}
+
+.btn_bebida:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+}
