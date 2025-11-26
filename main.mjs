@@ -1,12 +1,16 @@
 import { app, BrowserWindow } from 'electron';
 
-function createWindow() {
+const createWindow = () => {
     const win = new BrowserWindow({
-        width: 1900,
-        height: 1000
+        width: 1700,
+        height: 1000,
+        minWidth: 1700,
+        minHeight: 1000,
+        maxWidth: 1700,
+        maxHeight: 1000
     });
 
-    win.loadFile('renderer/index.html');
+    win.loadFile('ventana_principal.html');
 }
 
 app.whenReady().then(createWindow);
