@@ -14,4 +14,5 @@ const createWindow = () => {
     win.loadFile('src/ventana_principal.html');
 }
 
+
 app.whenReady().then(createWindow);

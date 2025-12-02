@@ -1,14 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Gestión de Máquina - COCA-COLA</title>
+
+    <script defer src="./maquina.mjs"></script>
 </head>
 
-<body>
-    <p>Hola desde la ventana secundaria</p>
+<body id="cuerpo">
+
+    <div id="menu">
+        <h1 id="titulo_menu">GESTIÓN DE MÁQUINA</h1>
+
+        <div id="contenedor_confirmacion"
+            style="background-color: #c8102e; padding: 40px; border-radius: 20px; border: 10px solid white;">
+            <h2 style="font-size: 40px; margin-bottom: 30px; color: white;">Panel de Control</h2>
+
+            <div style="color: white; font-size: 25px; margin-bottom: 30px;">
+                <p>Stock actual de bebidas:</p>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 20px;">
+                    <p>🥤 Coca Cola: <span id="stock_coca">10</span></p>
+                    <p>🥤 Coca Zero: <span id="stock_zero">10</span></p>
+                    <p>🥤 Coca Light: <span id="stock_light">10</span></p>
+                    <p>🍋 Sprite: <span id="stock_sprite">10</span></p>
+                    <p>🍊 Fanta: <span id="stock_fanta">10</span></p>
+                    <p>🍵 Nestea: <span id="stock_nestea">10</span></p>
+                </div>
+            </div>
+
+            <div style="color: white; font-size: 25px; margin-bottom: 30px;">
+                <p>💰 Dinero total recaudado: <span id="dinero_total">0.00</span>€</p>
+            </div>
+
+            <div id="botones_confirmacion" style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+                <button id="btn_rellenar" class="btn_menu">Rellenar Stock</button>
+                <button id="btn_retirar_dinero" class="btn_menu">Retirar Dinero</button>
+                <button id="btn_volver" class="btn_menu">Volver</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>

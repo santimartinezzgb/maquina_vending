@@ -21,24 +21,13 @@
     <!-- MÁQUINA -->
     <div id="maquina">
 
-        <!-- Mitad derecha de la máquina -->
-        <section id="izquierda-maquina">
-
-            <!-- Imagen de cocacola -->
-            <img id="imagen-cocacola" src="assets/images/cocacola.jpg" />
-
-            <!-- Logo de cocacola -->
-            <img id="imagen-logo-cocacola" src="assets/images/cocacolaMarca.jpg" />
-
-        </section>
 
         <!-- Mitad derecha de la máquina -->
         <section id="derecha_maquina">
 
             <!-- Pantalla principal -->
             <div id="pantalla_principal">
-                Seleccionar bebida
-
+                <img src="assets/images/logo-maquina.jpg" id="imagen_logo_cocacola">
             </div>
 
             <!-- 1ª fila de bebidas -->
@@ -84,6 +73,25 @@
 
     </div>
 
+
+    <!-- PANTALLA DE CONFIRMACIÓN  -->
+    <div id="pantalla_confirmacion">
+        <div id="contenedor_confirmacion">
+            <p style="font-size: 40px; margin-bottom: 20px;">Confirmación para abrir la máquina</p>
+            <p style="font-size: 25px; margin-bottom: 15px;">Introduce la contraseña:</p>
+            <input type="password" id="input_contrasena" placeholder="Contraseña">
+            <div id="botones_confirmacion">
+                <button id="btn_confirmar" class="btn_menu">Confirmar</button>
+                <button id="btn_cancelar" class="btn_menu">Cancelar</button>
+            </div>
+            <p id="mensaje_error">❌ Contraseña
+                incorrecta ❌</p>
+        </div>
+    </div>
+
+    <div id="pantalla_oculta">
+        <div id="circulo_oculto" />
+    </div>
 </body>
 
 </html>

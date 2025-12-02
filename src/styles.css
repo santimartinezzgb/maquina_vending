@@ -17,21 +17,36 @@
 #maquina {
     display: flex;
 
-    background-color: #DF0A1C;
-    border-color: white;
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        linear-gradient(180deg, #c8102e 0%, #8b0000 50%, #c8102e 100%);
 
-    width: 1000px;
+    border-color: white;
+    box-shadow:
+        inset 0 0 50px rgba(0, 0, 0, 0.3),
+        0 10px 30px rgba(0, 0, 0, 0.5);
+
+    width: 650px;
     height: 850px;
 
     border-width: 10px;
     border-style: solid;
-    border-radius: 10px;
+    border-radius: 150px 150px 0 0;
 }
 
 /* ====== IZQUIERDA MÁQUINA*/
-
+/*
 #izquierda-maquina {
-    width: 350px;
+    width: 100px;
     height: 850px;
     border-right: 10px solid white;
 
@@ -56,7 +71,7 @@
     width: 500px;
     transform: rotate(-90deg);
 
-}
+}*/
 
 /* ====== DERECHA MÁQUINA*/
 #derecha_maquina {
@@ -67,19 +82,26 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 70px;
+    gap: 120px;
 }
 
 #pantalla_principal {
-    width: 500px;
-    border-radius: 10px;
-    height: 200px;
+    width: 650px;
+    height: 300px;
 
     background-color: white;
     display: flex;
     align-items: center;
+    justify-content: center;
     text-align: center;
     font-size: 70px;
+
+    border-radius: 130px 130px 0 0;
+}
+
+#imagen_logo_cocacola {
+    width: 400px;
+    height: 200px;
 }
 
 /* ========== GRUPO BEBIDAS ==========*/
@@ -93,6 +115,7 @@
 #coca_cola {
     grid-column-start: 0;
     grid-column-end: 1;
+    background-color: white;
 
     grid-row-start: 0;
     grid-row-end: 1;
@@ -101,6 +124,7 @@
 #coca_cola_zero {
     grid-column-start: 1;
     grid-column-end: 2;
+    background-color: white;
 
     grid-row-start: 0;
     grid-row-end: 1;
@@ -109,6 +133,7 @@
 #coca_cola_light {
     grid-column-start: 2;
     grid-column-end: 3;
+    background-color: white;
 
     grid-row-start: 0;
     grid-row-end: 1;
@@ -117,6 +142,7 @@
 #sprite {
     grid-column-start: 0;
     grid-column-end: 1;
+    background-color: white;
 
     grid-row-start: 1;
     grid-row-end: 2;
@@ -125,6 +151,7 @@
 #fanta {
     grid-column-start: 1;
     grid-column-end: 2;
+    background-color: white;
 
     grid-row-start: 1;
     grid-row-end: 2;
@@ -133,6 +160,7 @@
 #nestea {
     grid-column-start: 2;
     grid-column-end: 3;
+    background-color: white;
 
     grid-row-start: 1;
     grid-row-end: 2;
@@ -184,6 +212,12 @@
     text-align: center;
     align-content: center;
     font-size: 30px;
+    margin-bottom: 30px;
+}
+
+#expulsor_bebidas:hover {
+    cursor: pointer;
+    background-color: gray;
 }
 
 /* ================= MENÚ INTERACTIVO ================= */
@@ -238,4 +272,59 @@
 .btn_bebida:hover {
     cursor: pointer;
     transform: scale(1.05);
+}
+
+/* ================= PANTALLA DE CONFIRMACIÓN ================= */
+#pantalla_confirmacion {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#contenedor_confirmacion {
+
+    background-color: #c8102e;
+    padding: 40px;
+    border-radius: 20px;
+    border: 10px solid white;
+    color: white;
+    text-align: center;
+}
+
+#input_contrasena {
+    width: 300px;
+    height: 50px;
+    font-size: 25px;
+    font-family: "Pixelify Sans", sans-serif;
+    text-align: center;
+    border-radius: 10px;
+    border: 5px solid white;
+    margin-bottom: 20px;
+}
+
+
+#mensaje_error {
+    color: yellow;
+    display: none;
+    margin-top: 15px;
+    font-size: 20px;
+}
+
+#botones_confirmacion {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+#botones_confirmacion .btn_menu {
+    width: 200px;
+    height: 60px;
+    font-size: 25px;
 }
