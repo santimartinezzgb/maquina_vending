@@ -13,7 +13,7 @@
     <title>COCA-COLA VENDING MACHINE</title>
 
     <!-- defer: Para que index.mjs carge junto con el html -->
-    <script defer src="./index.mjs"></script>
+    <script defer src="./vista_primera.mjs"></script>
 </head>
 
 <body id="cuerpo">
@@ -60,7 +60,9 @@
     <!-- MENÚ -->
     <div id="menu">
 
-        <h1 id="titulo_menu">MENÚ</h1>
+        <section id="pantalla_interactiva">
+            <p id="mensaje">Seleccione producto</p>
+        </section>
 
         <!-- Botón para introducir dinero -->
         <button id="btn_introductir_dinero" class="btn_menu">Introducir dinero</button>
@@ -89,9 +91,6 @@
         </div>
     </div>
 
-    <div id="pantalla_oculta">
-        <div id="circulo_oculto" />
-    </div>
 </body>
 
 </html>
