@@ -13,6 +13,33 @@
     gap: 100px;
 }
 
+#pantalla_carga {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#contenedor_carga {
+    background-color: #c8102e;
+    padding: 40px;
+    border-radius: 20px;
+    border: 10px solid white;
+    color: white;
+    text-align: center;
+    font-size: 50px;
+}
+
+#texto_carga {
+    font-size: 50px;
+}
+
 /* ================= MÁQUINA DE VENDING ================= */
 #maquina {
     display: flex;
@@ -30,10 +57,12 @@
             transparent 4px),
         linear-gradient(180deg, #c8102e 0%, #8b0000 50%, #c8102e 100%);
 
-    border-color: white;
     box-shadow:
-        inset 0 0 50px rgba(0, 0, 0, 0.3),
-        0 10px 30px rgba(0, 0, 0, 0.5);
+        0 0 20px rgba(200, 16, 46, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+    border-color: white;
+
 
     width: 650px;
     height: 850px;
@@ -43,35 +72,6 @@
     border-radius: 150px 150px 0 0;
 }
 
-/* ====== IZQUIERDA MÁQUINA*/
-/*
-#izquierda-maquina {
-    width: 100px;
-    height: 850px;
-    border-right: 10px solid white;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 160px;
-}
-
-#imagen-cocacola {
-    width: 250px;
-
-    margin-top: 30px;
-
-    border-width: 10px;
-    border-radius: 10px;
-    border-color: white;
-    border-style: solid;
-}
-
-#imagen-logo-cocacola {
-    width: 500px;
-    transform: rotate(-90deg);
-
-}*/
 
 /* ====== DERECHA MÁQUINA*/
 #derecha_maquina {
@@ -200,19 +200,17 @@
 
 
 #expulsor_bebidas {
-    width: 300px;
-    height: 80px;
-
-    background-color: rgb(185, 185, 185);
-    border-width: 10px;
+    width: 100%;
+    height: 60px;
+    background-color: #333;
+    border: 5px solid white;
     border-radius: 10px;
-    border-color: white;
-    border-style: solid;
-
-    text-align: center;
-    align-content: center;
-    font-size: 30px;
-    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: white;
+    transition: all 0.3s ease;
 }
 
 #expulsor_bebidas:hover {
@@ -227,8 +225,46 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    gap: 30px;
 }
+
+#saldo {
+    position: fixed;
+    top: 20px;
+    right: 40px;
+
+    font-size: 35px;
+    font-weight: bold;
+    color: white;
+
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+
+    padding: 20px 40px;
+    border: 5px solid white;
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 20px rgba(200, 16, 46, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+
+    z-index: 999;
+
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 
 #pantalla_interactiva {
     background-color: white;
@@ -347,6 +383,43 @@
 }
 
 
+/*================= VENTANA INTRODUCIR DINERO ================= */
+#pantalla_dinero {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#contenedor_dinero {
+    background-color: #c8102e;
+    padding: 40px;
+    border-radius: 20px;
+    border: 10px solid white;
+    color: white;
+    text-align: center;
+}
+
+#grid_dinero {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn_moneda {
+    width: 120px;
+    height: 80px;
+    font-size: 22px;
+}
+
+
 /* ================= VENTANA GESTIÓN MÁQUINA ================= */
 #ventana_gestion {
     display: flex;
@@ -372,17 +445,17 @@
         inset 0 0 50px rgba(0, 0, 0, 0.3),
         0 10px 30px rgba(0, 0, 0, 0.5);
 
-    width: 850px;
+    width: 1000px;
     height: 850px;
 
     border-width: 5px 5px 0 5px;
     border-style: solid;
     border-radius: 150px 150px 0 0;
-    gap: 40px;
+    gap: 20px;
 }
 
 #relleno_panel_control {
-    width: 850px;
+    width: 1000px;
     height: 200px;
 
     background-color: white;
@@ -510,14 +583,15 @@
 #cuadro_fanta {
     grid-column-start: 1;
     grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
     border-width: 5px;
     padding: 10px;
     gap: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-row-start: 1;
-    grid-row-end: 2;
     background:
         repeating-linear-gradient(0deg,
             rgba(255, 255, 255, 0.05) 0px,
@@ -535,14 +609,15 @@
 #cuadro_nestea {
     grid-column-start: 2;
     grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+
     border-width: 5px;
     padding: 10px;
     gap: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    grid-row-start: 1;
-    grid-row-end: 2;
     background:
         repeating-linear-gradient(0deg,
             rgba(255, 255, 255, 0.05) 0px,
@@ -557,9 +632,56 @@
         linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #c8102e 100%);
 }
 
+.cuadro_bebida {
+    border-width: 10px;
+    border-radius: 10px;
+    border-color: white;
+    border-style: solid;
+    transition: all;
+}
+
+
+.contenido_refresco {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#btn_rellenar_coca_cola,
+#btn_rellenar_coca_cola_zero,
+#btn_rellenar_coca_cola_light,
+#btn_rellenar_sprite,
+#btn_rellenar_fanta,
+#btn_rellenar_nestea {
+    width: 100px;
+    height: 30px;
+    font-size: 20px;
+    font-family: "Pixelify Sans", sans-serif;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+
+}
+
+#btn_rellenar_coca_cola:hover,
+#btn_rellenar_coca_cola_zero:hover,
+#btn_rellenar_coca_cola_light:hover,
+#btn_rellenar_sprite:hover,
+#btn_rellenar_fanta:hover,
+#btn_rellenar_nestea:hover {
+    cursor: pointer;
+    background-color: black;
+    color: white;
+    transform: scale(1.05);
+}
+
 #dinero_recaudado {
     font-size: 25px;
     color: white
+}
+
+#dinero_recaudado span {
+    font-weight: bold;
 }
 
 #botones_confirmacion {
@@ -568,9 +690,6 @@
     justify-content: center;
 }
 
-#dinero_recaudado span {
-    font-weight: bold;
-}
 
 #dinero_total {
     font-size: 30px;
@@ -598,4 +717,22 @@
 
     background-color: black;
     color: white;
+}
+
+.input_precio {
+    width: 80px;
+    height: 30px;
+    font-size: 18px;
+    font-family: "Pixelify Sans", sans-serif;
+    text-align: center;
+    border-radius: 5px;
+    border: 3px solid white;
+    background-color: #c8102e;
+    color: white;
+    padding: 5px;
+}
+
+.input_precio:focus {
+    outline: none;
+    border-color: yellow;
 }

@@ -18,6 +18,13 @@
 
 <body id="cuerpo">
 
+    <!-- PANTALLA DE CARGA -->
+    <div id="pantalla_carga">
+        <div id="contenedor_carga">
+            <p id="texto_carga">Cargando...</p>
+        </div>
+    </div>
+
     <!-- MÁQUINA -->
     <div id="maquina">
 
@@ -60,6 +67,8 @@
     <!-- MENÚ -->
     <div id="menu">
 
+        <p id="saldo"></p>
+
         <section id="pantalla_interactiva">
             <p id="mensaje">Seleccione producto</p>
         </section>
@@ -73,6 +82,30 @@
         <!-- Botón para salir del programa -->
         <button id="btn_salir" class="btn_menu">Salir</button>
 
+    </div>
+
+
+
+    <!-- PANTALLA DE DINERO -->
+    <div id="pantalla_dinero" style="display: none;">
+        <section id="contenedor_dinero">
+            <h2 style="font-size: 40px; margin-bottom: 20px;">Introducir Dinero</h2>
+            <p style="font-size: 30px; margin-bottom: 30px;">Saldo actual: <span id="saldo_actual">0.00</span>€</p>
+
+            <div id="grid_dinero">
+                <button class="btn_moneda btn_menu" data-valor="0.05">0.05€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.10">0.10€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.20">0.20€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.50">0.50€</button>
+                <button class="btn_moneda btn_menu" data-valor="1.00">1.00€</button>
+                <button class="btn_moneda btn_menu" data-valor="2.00">2.00€</button>
+                <button class="btn_moneda btn_menu" data-valor="5.00">5€</button>
+                <button class="btn_moneda btn_menu" data-valor="10.00">10€</button>
+                <button class="btn_moneda btn_menu" data-valor="20.00">20€</button>
+            </div>
+
+            <button id="btn_cerrar_dinero" class="btn_menu">Cerrar</button>
+        </section>
     </div>
 
 
