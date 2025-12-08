@@ -5,6 +5,9 @@ on:
     branches: [master]
     paths: ['package.json']
 
+permissions:
+  contents: write
+
 jobs:
   tag:
     runs-on: ubuntu-latest
