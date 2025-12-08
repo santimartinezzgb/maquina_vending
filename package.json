@@ -4,17 +4,16 @@
   "description": "",
   "main": "src/main.mjs",
   "scripts": {
-    "dev": "electron .",
+    "dev": "ELECTRON_DISABLE_SECURITY_WARNINGS=true electron . --no-sandbox --disable-gpu --disable-dev-shm-usage",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron": "^39.2.3"
+    "electron": "^28.0.0"
   },
   "dependencies": {
-    "dotenv": "^17.2.3",
     "electron-reload": "^2.0.0-alpha.1"
   }
 }
