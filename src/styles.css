@@ -26,6 +26,19 @@
     z-index: 1000;
 }
 
+#pantalla_carga_salida {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
 #contenedor_carga {
     background-color: #c8102e;
     padding: 40px;

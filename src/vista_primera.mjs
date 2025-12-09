@@ -4,7 +4,7 @@ const $ = selector => document.querySelector(selector);
 
 // VARIABLES Y LISTAS ==========================================
 const $pantalla_carga = $('#pantalla_carga');
-const $contenedor_carga = $('#contenedor_carga');
+const $pantalla_carga_salida = $('#pantalla_carga_salida');
 
 // Ocultar pantalla de carga después de 2 segundos
 // Se utilza para acompañar la carga de datos
@@ -12,6 +12,7 @@ setTimeout(() => {
     $pantalla_carga.style.display = 'none';
 }, 2000);
 
+// Elementos de la interfaz principal
 const $mensaje = $('#mensaje');
 const $coca_cola = $('#coca_cola');
 const $coca_cola_zero = $('#coca_cola_zero');
@@ -43,8 +44,8 @@ const $recoger_bebida = $('#recoger_bebida');
 // Contraseña para abrir la máquina
 const CONTRASENA_CORRECTA = "1";
 
-// Dinero recaudado
-const $dinero_recaudado = $('#dinero_recaudado');
+
+//localStorage. Para almacenar datos persistentes entre sesiones
 
 // Cargar stock desde localStorage
 let stock = JSON.parse(localStorage.getItem('stock_bebidas')) || {
@@ -219,5 +220,8 @@ $btn_confirmar.addEventListener('click', () => {
 });
 
 $salir.addEventListener('click', () => {
-    window.close();
+    $pantalla_carga_salida.style.display = 'flex';
+    setTimeout(() => {
+        window.close();
+    }, 2000);
 });
