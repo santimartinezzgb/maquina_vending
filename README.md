@@ -18,8 +18,8 @@ Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron
 git clone https://github.com/santimartinezzgb/maquina_vending.git
 cd maquina_vending
 
-# Instalar dependencias
-npm install
+# Instalar
+bun install
 
 # Ejecutar
 ./start.sh
