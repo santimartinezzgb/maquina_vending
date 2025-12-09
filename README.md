@@ -54,7 +54,7 @@ npm install
 ## Tecnologías
 
 - **Electron** v28.0.0 - Framework de aplicaciones de escritorio
-- **Node.js** - Entorno de ejecución
+- **Bun** - Entorno de ejecución
 - **localStorage** - Persistencia de datos
 - **GitHub Actions** - CI/CD para versionado automático
 
