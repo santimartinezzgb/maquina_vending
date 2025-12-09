@@ -12,10 +12,11 @@
     <link rel="stylesheet" type="text/css" href="styles.css" />
     <title>Gestión de Máquina - COCA-COLA</title>
 
+    <!-- defer: Para que index.mjs carge junto con el html -->
     <script defer src="./vista_segunda.mjs"></script>
 </head>
 
-<body id="cuerpo">
+<body id="cuerpo_ventana_segunda">
 
 
 
@@ -29,8 +30,10 @@
             <article id="cuadro_coca_cola" class="cuadro_bebida">
                 <img src="assets/images/COCA-COLA.png" alt="Coca Cola">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_coca_cola" class="input_precio" value="1.00" step="0.01"
-                            min="0">€</p>
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
                     <p>
                         <span id="stock_coca_cola">0</span> unidades
                     </p>
@@ -41,8 +44,10 @@
             <article id="cuadro_coca_cola_zero" class="cuadro_bebida">
                 <img src="assets/images/COCA-COLA_ZERO.png" alt="Coca Cola Zero">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_coca_cola_zero" class="input_precio" value="1.00"
-                            step="0.01" min="0">€</p>
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola_zero" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
                     <p>
                         <span id="stock_coca_cola_zero">0</span> unidades
                     </p>
@@ -53,8 +58,10 @@
             <article id="cuadro_coca_cola_light" class="cuadro_bebida">
                 <img src="assets/images/COCA-COLA_LIGHT.png" alt="Coca Cola Light">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_coca_cola_light" class="input_precio" value="1.00"
-                            step="0.01" min="0">€</p>
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola_light" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
                     <p>
                         <span id="stock_coca_cola_light">0</span> unidades
                     </p>
@@ -65,8 +72,9 @@
             <article id="cuadro_sprite" class="cuadro_bebida">
                 <img src="assets/images/SPRITE.png" alt="Sprite">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_sprite" class="input_precio" value="1.00" step="0.01"
-                            min="0">€</p>
+                    <p>Precio:
+                        <input type="number" id="precio_sprite" class="input_precio" value="1.00" step="0.01" min="0">€
+                    </p>
                     <p>
                         <span id="stock_sprite">0</span> unidades
                     </p>
@@ -77,8 +85,9 @@
             <article id="cuadro_fanta" class="cuadro_bebida">
                 <img src="assets/images/FANTA.png" alt="Fanta">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_fanta" class="input_precio" value="1.00" step="0.01"
-                            min="0">€</p>
+                    <p>Precio:
+                        <input type="number" id="precio_fanta" class="input_precio" value="1.00" step="0.01" min="0">€
+                    </p>
                     <p>
                         <span id="stock_fanta">0</span> unidades
                     </p>
@@ -89,7 +98,8 @@
             <article id="cuadro_nestea" class="cuadro_bebida">
                 <img src="assets/images/NESTEA.png" alt="Nestea">
                 <span class="contenido_refresco">
-                    <p>Precio: <input type="number" id="precio_nestea" class="input_precio" value="1.00" min="1.00">€
+                    <p>Precio:
+                        <input type="number" id="precio_nestea" class="input_precio" value="1.00" min="1.00">€
                     </p>
                     <p>
                         <span id="stock_nestea">0</span> unidades
@@ -100,17 +110,27 @@
 
         </section>
 
-        <div id="dinero_recaudado">
-            <p>Dinero total recaudado:
-                <span id="dinero_total">0.00</span>€
+        <div id="contenedor_dinero_recaudado">
+            <p>Recaudación actual:
+                <span id="dinero_recaudado">0.00</span>€
             </p>
         </div>
 
-        <div id="botones_confirmacion">
-            <button id="btn_retirar_dinero">Retirar Dinero</button>
-            <button id="btn_volver">Volver</button>
-        </div>
+
     </div>
+
+
+
+    <div id="menu_gestion_maquina">
+
+        <section id="total_recaudaciones">
+            <p>Total recaudado: <span id="total_recaudaciones_valor">0.00</span>€</p>
+        </section>
+
+
+        <button id="btn_retirar_dinero">Retirar Dinero</button>
+        <button id="btn_volver">Volver</button>
+
     </div>
 
 </body>

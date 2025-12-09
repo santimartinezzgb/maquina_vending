@@ -7,6 +7,7 @@ const $pantalla_carga = $('#pantalla_carga');
 const $contenedor_carga = $('#contenedor_carga');
 
 // Ocultar pantalla de carga después de 2 segundos
+// Se utilza para acompañar la carga de datos
 setTimeout(() => {
     $pantalla_carga.style.display = 'none';
 }, 2000);
@@ -37,12 +38,16 @@ const $btn_cerrar_dinero = $('#btn_cerrar_dinero');
 const $saldo_actual = $('#saldo_actual');
 
 // Elemento expulsor de bebidas
-const $expulsor_bebidas = $('#expulsor_bebidas');
+const $recoger_bebida = $('#recoger_bebida');
 
+// Contraseña para abrir la máquina
 const CONTRASENA_CORRECTA = "1";
 
-// Stock de las bebidas
-let stock = {
+// Dinero recaudado
+const $dinero_recaudado = $('#dinero_recaudado');
+
+// Cargar stock desde localStorage
+let stock = JSON.parse(localStorage.getItem('stock_bebidas')) || {
     coca_cola: 10,
     coca_cola_zero: 10,
     coca_cola_light: 10,
@@ -51,7 +56,7 @@ let stock = {
     nestea: 10
 };
 
-// Precios de las bebidas
+// Cargar precios desde localStorage
 let precios = JSON.parse(localStorage.getItem('precios_bebidas')) || {
     coca_cola: 1.50,
     coca_cola_zero: 1.50,
@@ -73,11 +78,20 @@ const nombres = {
 
 // MÉTODOS Y LÓGICA ==================================================
 
-// Saldo inicial de la máquina
-let saldo_maquina = 0;
+// Saldo inicial de la máquina - cargar desde localStorage
+// || 0: evita que el saldo sea NaN si el localStorage no tiene el valor
+let saldo_maquina = parseFloat(localStorage.getItem('saldo_maquina')) || 0;
+let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
+
+// Función para guardar saldo
+let guardarSaldo = () => {
+    localStorage.setItem('saldo_maquina', saldo_maquina.toString());
+}
+
 // Actualizar el saldo en la interfaz
 let actualizarSaldo = () => {
     $saldo.textContent = `Saldo: ${saldo_maquina.toFixed(2)}€`;
+    guardarSaldo();
 }
 actualizarSaldo();
 
@@ -112,6 +126,8 @@ let comprarBebida = (bebida_id, nombre, precio) => {
 
         // Descontar el precio del saldo
         saldo_maquina -= precio;
+        dinero_recaudado += precio;
+        localStorage.setItem('dinero_recaudado', dinero_recaudado.toString());
         actualizarSaldo();
 
         // Disminuir el stock de la bebida
@@ -119,23 +135,24 @@ let comprarBebida = (bebida_id, nombre, precio) => {
         guardarStock();
 
         $saldo_actual.textContent = saldo_maquina.toFixed(2);
-        $mensaje.innerHTML = `✓ ${nombre}€`;
+        $mensaje.innerHTML = `✓ ${nombre}<br>${precio.toFixed(2)} €`;
 
         // Animar el expulsor de bebidas
-        $expulsor_bebidas.style.backgroundColor = '#00ff00';
-        $expulsor_bebidas.style.boxShadow = '0 0 20px #00ff00';
-        $expulsor_bebidas.textContent = '¡Recoge tu bebida!';
+        $recoger_bebida.style.backgroundColor = '#00ff00';
+        $recoger_bebida.style.boxShadow = '0 0 20px #00ff00';
+        $recoger_bebida.textContent = '¡Recoge tu bebida!';
 
         setTimeout(() => {
-            $expulsor_bebidas.style.backgroundColor = '';
-            $expulsor_bebidas.style.boxShadow = '';
-            $expulsor_bebidas.textContent = '';
+            $recoger_bebida.style.backgroundColor = '';
+            $recoger_bebida.style.boxShadow = '';
+            $recoger_bebida.textContent = '';
         }, 3000);
     }
 }
 
 $coca_cola.addEventListener('click', () => {
     comprarBebida('coca_cola', nombres.coca_cola, precios.coca_cola);
+
 });
 
 $coca_cola_zero.addEventListener('click', () => {

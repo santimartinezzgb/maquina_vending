@@ -1,4 +1,4 @@
-#cuerpo {
+#cuerpo_ventana_primera {
     width: auto;
     height: auto;
     padding-left: 100px;
@@ -67,7 +67,7 @@
     width: 650px;
     height: 850px;
 
-    border-width: 10px;
+    border-width: 10px 10px 0 10px;
     border-style: solid;
     border-radius: 150px 150px 0 0;
 }
@@ -82,7 +82,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 120px;
+    gap: 100px;
 }
 
 #pantalla_principal {
@@ -199,9 +199,11 @@
 /* =============================================== */
 
 
-#expulsor_bebidas {
-    width: 100%;
+#recoger_bebida {
+    width: 40%;
     height: 60px;
+    margin-bottom: 40px;
+
     background-color: #333;
     border: 5px solid white;
     border-radius: 10px;
@@ -213,8 +215,8 @@
     transition: all 0.3s ease;
 }
 
-#expulsor_bebidas:hover {
-    cursor: pointer;
+#recoger_bebida:hover {
+    color: black;
     background-color: gray;
 }
 
@@ -312,6 +314,11 @@
 
     background-color: black;
     color: white;
+}
+
+#grupo_bebidas img {
+    width: 70px;
+    height: 130px;
 }
 
 .btn_bebida {
@@ -421,6 +428,85 @@
 
 
 /* ================= VENTANA GESTIÓN MÁQUINA ================= */
+#cuerpo_ventana_segunda {
+    width: auto;
+    height: auto;
+    padding-left: 100px;
+    padding-right: 100px;
+    padding-top: 100px;
+    font-family: "Pixelify Sans", sans-serif;
+
+    background-color: black;
+
+    display: flex;
+    gap: 100px;
+}
+
+#menu_gestion_maquina {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#total_recaudaciones {
+    font-size: 30px;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+
+    background:
+        repeating-linear-gradient(0deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        repeating-linear-gradient(90deg,
+            rgba(255, 255, 255, 0.05) 0px,
+            rgba(255, 255, 255, 0.05) 2px,
+            transparent 2px,
+            transparent 4px),
+        linear-gradient(135deg, #c8102e 0%, #8b0000 100%);
+
+    padding: 15px 30px;
+    border: 5px solid white;
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 20px rgba(200, 16, 46, 0.6),
+        inset 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+#total_recaudaciones_valor {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+#btn_retirar_dinero,
+#btn_volver {
+    width: 300px;
+    height: 50px;
+    font-size: 20px;
+    font-family: "Pixelify Sans", sans-serif;
+
+    background-color: white;
+    border-radius: 10px;
+
+    transition: all 0.3s ease;
+}
+
+#btn_retirar_dinero:hover,
+#btn_volver:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+    border-color: white;
+    border-width: 5px;
+
+    background-color: black;
+    color: white;
+}
+
 #ventana_gestion {
     display: flex;
     flex-direction: column;
@@ -632,6 +718,18 @@
         linear-gradient(180deg, #ffffff 0%, #ffffff 50%, #c8102e 100%);
 }
 
+#precio_coca_cola,
+#precio_coca_cola_zero,
+#precio_coca_cola_light,
+#precio_sprite,
+#precio_fanta,
+#precio_nestea {
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 15px;
+    text-align: center;
+}
+
 .cuadro_bebida {
     border-width: 10px;
     border-radius: 10px;
@@ -675,18 +773,18 @@
     transform: scale(1.05);
 }
 
-#dinero_recaudado {
+#contenedor_dinero_recaudado {
     font-size: 25px;
     color: white
 }
 
-#dinero_recaudado span {
+#dinero_recaudado {
+    font-size: 40px;
     font-weight: bold;
 }
 
 #botones_confirmacion {
     display: flex;
-    gap: 20px;
     justify-content: center;
 }
 
@@ -695,29 +793,7 @@
     font-size: 30px;
 }
 
-#btn_retirar_dinero,
-#btn_volver {
-    width: 300px;
-    height: 70px;
-    font-size: 30px;
-    font-family: "Pixelify Sans", sans-serif;
 
-    background-color: white;
-    border-radius: 10px;
-
-    transition: all 0.3s ease;
-}
-
-#btn_retirar_dinero:hover,
-#btn_volver:hover {
-    transform: scale(1.05);
-    cursor: pointer;
-    border-color: white;
-    border-width: 5px;
-
-    background-color: black;
-    color: white;
-}
 
 .input_precio {
     width: 80px;

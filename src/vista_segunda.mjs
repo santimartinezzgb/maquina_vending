@@ -1,9 +1,9 @@
 const $ = selector => document.querySelector(selector);
 
-const $btn_rellenar = $('#btn_rellenar');
 const $btn_retirar_dinero = $('#btn_retirar_dinero');
 const $btn_volver = $('#btn_volver');
 
+// Elementos de precios
 const $precio_coca_cola = $('#precio_coca_cola');
 const $precio_coca_cola_zero = $('#precio_coca_cola_zero');
 const $precio_coca_cola_light = $('#precio_coca_cola_light');
@@ -18,6 +18,10 @@ const $stock_coca_cola_light = $('#stock_coca_cola_light');
 const $stock_sprite = $('#stock_sprite');
 const $stock_fanta = $('#stock_fanta');
 const $stock_nestea = $('#stock_nestea');
+
+// Dinero recaudado
+const $dinero_recaudado = $('#dinero_recaudado');
+const $total_recaudaciones_valor = $('#total_recaudaciones_valor');
 
 // Botones de rellenar
 const $btn_rellenar_coca_cola = $('#btn_rellenar_coca_cola');
@@ -93,6 +97,35 @@ $precio_nestea.addEventListener('change', () => {
     guardarPrecios();
 });
 
+
+$btn_rellenar_coca_cola.addEventListener('click', () => rellenarBebida('coca_cola'));
+$btn_rellenar_coca_cola_zero.addEventListener('click', () => rellenarBebida('coca_cola_zero'));
+$btn_rellenar_coca_cola_light.addEventListener('click', () => rellenarBebida('coca_cola_light'));
+$btn_rellenar_sprite.addEventListener('click', () => rellenarBebida('sprite'));
+$btn_rellenar_fanta.addEventListener('click', () => rellenarBebida('fanta'));
+$btn_rellenar_nestea.addEventListener('click', () => rellenarBebida('nestea'));
+
+// Retirar dinero
+$btn_retirar_dinero.addEventListener('click', () => {
+    let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
+    let total_recaudaciones_valor = parseFloat(localStorage.getItem('total_recaudaciones')) || 0;
+    if (dinero_recaudado > 0) {
+
+        alert(`Has retirado ${dinero_recaudado.toFixed(2)}€ de la máquina.`);
+        total_recaudaciones_valor += dinero_recaudado;
+        localStorage.setItem('total_recaudaciones', total_recaudaciones_valor.toString());
+        $total_recaudaciones_valor.textContent = total_recaudaciones_valor.toFixed(2);
+
+        dinero_recaudado = 0;
+        localStorage.setItem('dinero_recaudado', dinero_recaudado.toString());
+        $dinero_recaudado.textContent = dinero_recaudado.toFixed(2);
+
+    } else {
+        alert('No hay dinero para retirar.');
+    }
+});
+
+// Función para actualizar el stock en la interfaz
 function actualizarStock() {
     $stock_coca_cola.textContent = stock.coca_cola;
     $stock_coca_cola_zero.textContent = stock.coca_cola_zero;
@@ -110,6 +143,7 @@ function actualizarStock() {
     $btn_rellenar_nestea.disabled = stock.nestea >= 10;
 }
 
+// Función para rellenar una bebida
 function rellenarBebida(bebida_id) {
     if (stock[bebida_id] < 10) {
         stock[bebida_id] = 10;
@@ -118,19 +152,28 @@ function rellenarBebida(bebida_id) {
     }
 }
 
-$btn_rellenar_coca_cola.addEventListener('click', () => rellenarBebida('coca_cola'));
-$btn_rellenar_coca_cola_zero.addEventListener('click', () => rellenarBebida('coca_cola_zero'));
-$btn_rellenar_coca_cola_light.addEventListener('click', () => rellenarBebida('coca_cola_light'));
-$btn_rellenar_sprite.addEventListener('click', () => rellenarBebida('sprite'));
-$btn_rellenar_fanta.addEventListener('click', () => rellenarBebida('fanta'));
-$btn_rellenar_nestea.addEventListener('click', () => rellenarBebida('nestea'));
 
+// Volver a la ventana principal
 if ($btn_volver) {
     $btn_volver.addEventListener('click', () => {
         window.location.href = 'ventana_principal.html';
     });
 }
 
-// Cargar precios y stock al iniciar
+// Función para cargar y mostrar dinero recaudado
+function cargarDineroRecaudado() {
+    let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
+    $dinero_recaudado.textContent = dinero_recaudado.toFixed(2);
+}
+
+// Función para cargar y mostrar total de recaudaciones
+function cargarTotalRecaudaciones() {
+    let total_recaudaciones = parseFloat(localStorage.getItem('total_recaudaciones')) || 0;
+    $total_recaudaciones_valor.textContent = total_recaudaciones.toFixed(2);
+}
+
+// Cargar precios, stock y dinero recaudado al iniciar
 cargarPrecios();
 actualizarStock();
+cargarDineroRecaudado();
+cargarTotalRecaudaciones();
