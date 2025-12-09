@@ -37,13 +37,13 @@ npm install
 
 ### Confirmación para poder gestionar la máquina
 
+**Acceso**: Click en "Abrir máquina" → Contraseña: `1`
+
 <img width="1678" height="965" alt="autenticacion" src="https://github.com/user-attachments/assets/bd964cc6-fbcd-4f85-9af1-e02fbaa4bebc" />
 
 ### Panel de Administración
 
 <img width="1678" height="965" alt="panel-de-control" src="https://github.com/user-attachments/assets/2c96c551-19d4-4d6d-845d-c901244ae069" />
-
-**Acceso**: Click en "Abrir máquina" → Contraseña: `1`
 
 - **Ajustar Precios**: Modificar el precio de cada bebida
 - **Rellenar Stock**: Restablecer stock a 10 unidades
