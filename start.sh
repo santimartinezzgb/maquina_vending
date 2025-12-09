@@ -2,4 +2,4 @@
 
 #Inicializar programa
 echo "Iniciando el programa..."
-npm run dev
+bun run dev

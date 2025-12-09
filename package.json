@@ -4,8 +4,7 @@
   "description": "",
   "main": "src/main.mjs",
   "scripts": {
-    "dev": "ELECTRON_DISABLE_SECURITY_WARNINGS=true electron . --no-sandbox --disable-gpu --disable-dev-shm-usage",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "bun run electron ."
   },
   "keywords": [],
   "author": "",
