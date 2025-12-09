@@ -29,15 +29,19 @@ npm install
 
 ### Interfaz Principal (Cliente)
 
-![Captura de pantalla - Interfaz Principal](ruta/a/captura1.png)
+<img width="1678" height="965" alt="inicio" src="https://github.com/user-attachments/assets/c8902810-bcd1-4abc-8e64-8669a9c5bdab" />
 
 1. **Introducir Dinero**: Click en el botón para agregar saldo (monedas de 0.05€ a 20€)
 2. **Seleccionar Bebida**: Click en la bebida deseada
 3. **Recoger Producto**: La bebida se expulsa si hay saldo y stock suficiente
 
+### Confirmación para poder gestionar la máquina
+
+<img width="1678" height="965" alt="autenticacion" src="https://github.com/user-attachments/assets/bd964cc6-fbcd-4f85-9af1-e02fbaa4bebc" />
+
 ### Panel de Administración
 
-![Captura de pantalla - Panel de Administración](ruta/a/captura2.png)
+<img width="1678" height="965" alt="panel-de-control" src="https://github.com/user-attachments/assets/2c96c551-19d4-4d6d-845d-c901244ae069" />
 
 **Acceso**: Click en "Abrir máquina" → Contraseña: `1`
 
