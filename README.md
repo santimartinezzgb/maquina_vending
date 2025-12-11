@@ -18,7 +18,7 @@ Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron
 - **Persistencia en la Nube**: Datos almacenados en MongoDB Atlas
 - **Sincronización en Tiempo Real**: Los cambios se guardan automáticamente
 
-## 📋 Requisitos Previos
+## Requisitos Previos
 
 1. **Bun** instalado globalmente
 2. **Cuenta de MongoDB Atlas** con un cluster creado
