@@ -2,7 +2,7 @@
 
 Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron, Bun y MongoDB Atlas. Incluye sistema de gestión completo con control de stock, precios y recaudación almacenados en la nube.
 
-## 🚀Tecnologías
+## Tecnologías
 
 - **Electron** - Framework para aplicaciones de escritorio
 - **Bun** - Runtime y gestor de paquetes JavaScript
