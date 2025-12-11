@@ -66,6 +66,10 @@ bun run start
 O con script de inicialización:
 
 ```bash
+chmod 755 start.sh
+```
+
+```bash
 ./start.sh
 ```
 
