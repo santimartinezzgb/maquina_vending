@@ -6,12 +6,6 @@ const $ = selector => document.querySelector(selector);
 const $pantalla_carga = $('#pantalla_carga');
 const $pantalla_carga_salida = $('#pantalla_carga_salida');
 
-// Ocultar pantalla de carga después de 2 segundos
-// Se utilza para acompañar la carga de datos
-setTimeout(() => {
-    $pantalla_carga.style.display = 'none';
-}, 2000);
-
 // Elementos de la interfaz principal
 const $mensaje = $('#mensaje');
 const $coca_cola = $('#coca_cola');
@@ -44,28 +38,11 @@ const $recoger_bebida = $('#recoger_bebida');
 // Contraseña para abrir la máquina
 const CONTRASENA_CORRECTA = "1";
 
-
-//localStorage. Para almacenar datos persistentes entre sesiones
-
-// Cargar stock desde localStorage
-let stock = JSON.parse(localStorage.getItem('stock_bebidas')) || {
-    coca_cola: 10,
-    coca_cola_zero: 10,
-    coca_cola_light: 10,
-    sprite: 10,
-    fanta: 10,
-    nestea: 10
-};
-
-// Cargar precios desde localStorage
-let precios = JSON.parse(localStorage.getItem('precios_bebidas')) || {
-    coca_cola: 1.50,
-    coca_cola_zero: 1.50,
-    coca_cola_light: 1.50,
-    sprite: 1.30,
-    fanta: 1.30,
-    nestea: 1.40
-};
+// Variables globales para datos de MongoDB
+let stock = {};
+let precios = {};
+let saldo_maquina = 0;
+let dinero_recaudado = 0;
 
 const nombres = {
     coca_cola: 'Coca-Cola',
@@ -79,41 +56,44 @@ const nombres = {
 
 // MÉTODOS Y LÓGICA ==================================================
 
-// Saldo inicial de la máquina - cargar desde localStorage
-// || 0: evita que el saldo sea NaN si el localStorage no tiene el valor
-let saldo_maquina = parseFloat(localStorage.getItem('saldo_maquina')) || 0;
-let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
+// Cargar datos desde MongoDB al iniciar
+const inicializarDatos = async () => {
+    try {
+        stock = await window.electronAPI.cargarStock();
+        precios = await window.electronAPI.cargarPrecios();
+        saldo_maquina = await window.electronAPI.cargarSaldo();
+        dinero_recaudado = await window.electronAPI.cargarDineroRecaudado();
 
-// Función para guardar saldo
-let guardarSaldo = () => {
-    localStorage.setItem('saldo_maquina', saldo_maquina.toString());
-}
+        actualizarSaldo();
+
+        setTimeout(() => {
+            $pantalla_carga.style.display = 'none';
+        }, 2000);
+    } catch (error) {
+        console.error('Error al inicializar datos:', error);
+        setTimeout(() => {
+            $pantalla_carga.style.display = 'none';
+        }, 2000);
+    }
+};
+
+// Función para guardar saldo en MongoDB
+const guardarSaldo = async () => {
+    await window.electronAPI.guardarSaldo(saldo_maquina);
+};
 
 // Actualizar el saldo en la interfaz
-let actualizarSaldo = () => {
+const actualizarSaldo = () => {
     $saldo.textContent = `Saldo: ${saldo_maquina.toFixed(2)}€`;
-    guardarSaldo();
-}
-actualizarSaldo();
+};
 
-// Función para guardar stock
-let guardarStock = () => {
-    localStorage.setItem('stock_bebidas', JSON.stringify(stock));
-}
-
-// Función para cargar stock
-let cargarStock = () => {
-    const stockGuardado = localStorage.getItem('stock_bebidas');
-    if (stockGuardado) {
-        stock = JSON.parse(stockGuardado);
-    }
-}
-
-// Cargar stock al iniciar
-cargarStock();
+// Función para guardar stock en MongoDB
+const guardarStock = async () => {
+    await window.electronAPI.guardarStock(stock);
+};
 
 // Función para manejar la compra de bebidas
-let comprarBebida = (bebida_id, nombre, precio) => {
+const comprarBebida = async (bebida_id, nombre, precio) => {
     if (stock[bebida_id] === 0) {
         $mensaje.innerHTML = `${nombre}<br>Stock insuficiente`;
         return;
@@ -124,19 +104,20 @@ let comprarBebida = (bebida_id, nombre, precio) => {
     } else if (saldo_maquina < precio) {
         $mensaje.innerHTML = `Saldo insuficiente<br>Faltan: ${(precio - saldo_maquina).toFixed(2)}€`;
     } else {
-
         // Descontar el precio del saldo
         saldo_maquina -= precio;
         dinero_recaudado += precio;
-        localStorage.setItem('dinero_recaudado', dinero_recaudado.toString());
+
+        await guardarSaldo();
+        await window.electronAPI.guardarDineroRecaudado(dinero_recaudado);
         actualizarSaldo();
 
         // Disminuir el stock de la bebida
         stock[bebida_id]--;
-        guardarStock();
+        await guardarStock();
 
         $saldo_actual.textContent = saldo_maquina.toFixed(2);
-        $mensaje.innerHTML = `✓ ${nombre}<br>${precio.toFixed(2)} €`;
+        $mensaje.innerHTML = `✓ ${nombre}<br>${precio.toFixed(2)}€`;
 
         // Animar el expulsor de bebidas
         $recoger_bebida.style.backgroundColor = '#00ff00';
@@ -149,7 +130,7 @@ let comprarBebida = (bebida_id, nombre, precio) => {
             $recoger_bebida.textContent = '';
         }, 3000);
     }
-}
+};
 
 $coca_cola.addEventListener('click', () => {
     comprarBebida('coca_cola', nombres.coca_cola, precios.coca_cola);
@@ -183,21 +164,20 @@ $introducir_dinero.addEventListener('click', () => {
 
 // Seleccionar todas las monedas
 document.querySelectorAll('.btn_moneda').forEach(btn => {
-
-    btn.addEventListener('click', () => {
-
+    btn.addEventListener('click', async () => {
         // Obtener el valor de la moneda desde el atributo data-valor
         const valor = parseFloat(btn.dataset.valor);
 
         // Actualizar el saldo de la máquina
         saldo_maquina += valor;
+        await guardarSaldo();
         actualizarSaldo();
+        $saldo_actual.textContent = saldo_maquina.toFixed(2);
     });
 });
 
 $btn_cerrar_dinero.addEventListener('click', () => {
     $pantalla_dinero.style.display = 'none';
-    $mensaje.innerHTML = `Saldo: ${saldo_maquina.toFixed(2)}€`;
 });
 
 $abrir_maquina.addEventListener('click', () => {
@@ -225,3 +205,6 @@ $salir.addEventListener('click', () => {
         window.close();
     }, 2000);
 });
+
+// Inicializar la aplicación cargando datos desde MongoDB
+inicializarDatos();

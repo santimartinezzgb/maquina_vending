@@ -31,102 +31,76 @@ const $btn_rellenar_sprite = $('#btn_rellenar_sprite');
 const $btn_rellenar_fanta = $('#btn_rellenar_fanta');
 const $btn_rellenar_nestea = $('#btn_rellenar_nestea');
 
-// Cargar stock desde localStorage
-let stock = JSON.parse(localStorage.getItem('stock_bebidas')) || {
-    coca_cola: 10,
-    coca_cola_zero: 10,
-    coca_cola_light: 10,
-    sprite: 10,
-    fanta: 10,
-    nestea: 10
-};
+// Variables globales para datos de MongoDB
+let stock = {};
+let precios = {};
+let dinero_actual = 0;
+let total_recaudaciones = 0;
 
-// Cargar precios desde localStorage
-let precios = JSON.parse(localStorage.getItem('precios_bebidas')) || {
-    coca_cola: 1.50,
-    coca_cola_zero: 1.50,
-    coca_cola_light: 1.50,
-    sprite: 1.30,
-    fanta: 1.30,
-    nestea: 1.40
-};
+// Inicializar datos desde MongoDB
+const inicializarDatos = async () => {
+    try {
+        stock = await window.electronAPI.cargarStock();
+        precios = await window.electronAPI.cargarPrecios();
+        dinero_actual = await window.electronAPI.cargarDineroRecaudado();
+        total_recaudaciones = await window.electronAPI.cargarTotalRecaudaciones();
 
-// Función para guardar precios
-function guardarPrecios() {
-    localStorage.setItem('precios_bebidas', JSON.stringify(precios));
-}
+        cargarPrecios();
+        actualizarStock();
+        actualizarDinero();
+    } catch (error) {
+        console.error('Error al inicializar datos:', error);
+    }
+};
 
 // Función para cargar precios en los inputs
-function cargarPrecios() {
+const cargarPrecios = () => {
     $precio_coca_cola.value = precios.coca_cola.toFixed(2);
     $precio_coca_cola_zero.value = precios.coca_cola_zero.toFixed(2);
     $precio_coca_cola_light.value = precios.coca_cola_light.toFixed(2);
     $precio_sprite.value = precios.sprite.toFixed(2);
     $precio_fanta.value = precios.fanta.toFixed(2);
     $precio_nestea.value = precios.nestea.toFixed(2);
-}
+};
+
+// Función para guardar precios en MongoDB
+const guardarPrecios = async () => {
+    await window.electronAPI.guardarPrecios(precios);
+};
 
 // Event listeners para actualizar precios
-$precio_coca_cola.addEventListener('change', () => {
+$precio_coca_cola.addEventListener('change', async () => {
     precios.coca_cola = parseFloat($precio_coca_cola.value) || 0;
-    guardarPrecios();
+    await guardarPrecios();
 });
 
-$precio_coca_cola_zero.addEventListener('change', () => {
+$precio_coca_cola_zero.addEventListener('change', async () => {
     precios.coca_cola_zero = parseFloat($precio_coca_cola_zero.value) || 0;
-    guardarPrecios();
+    await guardarPrecios();
 });
 
-$precio_coca_cola_light.addEventListener('change', () => {
+$precio_coca_cola_light.addEventListener('change', async () => {
     precios.coca_cola_light = parseFloat($precio_coca_cola_light.value) || 0;
-    guardarPrecios();
+    await guardarPrecios();
 });
 
-$precio_sprite.addEventListener('change', () => {
+$precio_sprite.addEventListener('change', async () => {
     precios.sprite = parseFloat($precio_sprite.value) || 0;
-    guardarPrecios();
+    await guardarPrecios();
 });
 
-$precio_fanta.addEventListener('change', () => {
+$precio_fanta.addEventListener('change', async () => {
     precios.fanta = parseFloat($precio_fanta.value) || 0;
-    guardarPrecios();
+    await guardarPrecios();
 });
 
-$precio_nestea.addEventListener('change', () => {
+$precio_nestea.addEventListener('change', async () => {
     precios.nestea = parseFloat($precio_nestea.value) || 0;
-    guardarPrecios();
-});
-
-
-$btn_rellenar_coca_cola.addEventListener('click', () => rellenarBebida('coca_cola'));
-$btn_rellenar_coca_cola_zero.addEventListener('click', () => rellenarBebida('coca_cola_zero'));
-$btn_rellenar_coca_cola_light.addEventListener('click', () => rellenarBebida('coca_cola_light'));
-$btn_rellenar_sprite.addEventListener('click', () => rellenarBebida('sprite'));
-$btn_rellenar_fanta.addEventListener('click', () => rellenarBebida('fanta'));
-$btn_rellenar_nestea.addEventListener('click', () => rellenarBebida('nestea'));
-
-// Retirar dinero
-$btn_retirar_dinero.addEventListener('click', () => {
-    let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
-    let total_recaudaciones_valor = parseFloat(localStorage.getItem('total_recaudaciones')) || 0;
-    if (dinero_recaudado > 0) {
-
-        alert(`Has retirado ${dinero_recaudado.toFixed(2)}€ de la máquina.`);
-        total_recaudaciones_valor += dinero_recaudado;
-        localStorage.setItem('total_recaudaciones', total_recaudaciones_valor.toString());
-        $total_recaudaciones_valor.textContent = total_recaudaciones_valor.toFixed(2);
-
-        dinero_recaudado = 0;
-        localStorage.setItem('dinero_recaudado', dinero_recaudado.toString());
-        $dinero_recaudado.textContent = dinero_recaudado.toFixed(2);
-
-    } else {
-        alert('No hay dinero para retirar.');
-    }
+    await guardarPrecios();
 });
 
 // Función para actualizar el stock en la interfaz
-function actualizarStock() {
+const actualizarStock = () => {
     $stock_coca_cola.textContent = stock.coca_cola;
     $stock_coca_cola_zero.textContent = stock.coca_cola_zero;
     $stock_coca_cola_light.textContent = stock.coca_cola_light;
@@ -141,17 +115,45 @@ function actualizarStock() {
     $btn_rellenar_sprite.disabled = stock.sprite >= 10;
     $btn_rellenar_fanta.disabled = stock.fanta >= 10;
     $btn_rellenar_nestea.disabled = stock.nestea >= 10;
-}
+};
+
+// Función para actualizar dinero en la interfaz
+const actualizarDinero = () => {
+    $dinero_recaudado.textContent = dinero_actual.toFixed(2);
+    $total_recaudaciones_valor.textContent = total_recaudaciones.toFixed(2);
+};
 
 // Función para rellenar una bebida
-function rellenarBebida(bebida_id) {
+const rellenarBebida = async (bebida_id) => {
     if (stock[bebida_id] < 10) {
         stock[bebida_id] = 10;
-        localStorage.setItem('stock_bebidas', JSON.stringify(stock));
+        await window.electronAPI.guardarStock(stock);
         actualizarStock();
     }
-}
+};
 
+// Event listeners para botones de rellenar
+$btn_rellenar_coca_cola.addEventListener('click', () => rellenarBebida('coca_cola'));
+$btn_rellenar_coca_cola_zero.addEventListener('click', () => rellenarBebida('coca_cola_zero'));
+$btn_rellenar_coca_cola_light.addEventListener('click', () => rellenarBebida('coca_cola_light'));
+$btn_rellenar_sprite.addEventListener('click', () => rellenarBebida('sprite'));
+$btn_rellenar_fanta.addEventListener('click', () => rellenarBebida('fanta'));
+$btn_rellenar_nestea.addEventListener('click', () => rellenarBebida('nestea'));
+
+// Retirar dinero
+$btn_retirar_dinero.addEventListener('click', async () => {
+    if (dinero_actual > 0) {
+        total_recaudaciones += dinero_actual;
+        await window.electronAPI.guardarTotalRecaudaciones(total_recaudaciones);
+
+        dinero_actual = 0;
+        await window.electronAPI.guardarDineroRecaudado(0);
+
+        actualizarDinero();
+    } else {
+        alert('No hay dinero para retirar.');
+    }
+});
 
 // Volver a la ventana principal
 if ($btn_volver) {
@@ -160,20 +162,5 @@ if ($btn_volver) {
     });
 }
 
-// Función para cargar y mostrar dinero recaudado
-function cargarDineroRecaudado() {
-    let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
-    $dinero_recaudado.textContent = dinero_recaudado.toFixed(2);
-}
-
-// Función para cargar y mostrar total de recaudaciones
-function cargarTotalRecaudaciones() {
-    let total_recaudaciones = parseFloat(localStorage.getItem('total_recaudaciones')) || 0;
-    $total_recaudaciones_valor.textContent = total_recaudaciones.toFixed(2);
-}
-
-// Cargar precios, stock y dinero recaudado al iniciar
-cargarPrecios();
-actualizarStock();
-cargarDineroRecaudado();
-cargarTotalRecaudaciones();
+// Inicializar la aplicación cargando datos desde MongoDB
+inicializarDatos();

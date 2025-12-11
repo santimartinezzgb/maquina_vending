@@ -1,6 +1,13 @@
 # MÁQUINA VENDING COCA-COLA
 
-Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron. Incluye sistema de gestión completo con control de stock, precios y recaudación.
+Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron, Bun y MongoDB Atlas. Incluye sistema de gestión completo con control de stock, precios y recaudación almacenados en la nube.
+
+## 🚀Tecnologías
+
+- **Electron** - Framework para aplicaciones de escritorio
+- **Bun** - Runtime y gestor de paquetes JavaScript
+- **MongoDB Atlas** - Base de datos NoSQL en la nube
+- **Mongoose** - ODM para MongoDB
 
 ## Características
 
@@ -8,20 +15,57 @@ Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron
 - **Sistema de Pago**: Introducir monedas y billetes virtuales
 - **Gestión de Stock**: Control de inventario por producto
 - **Panel de Administración**: Configuración de precios y reabastecimiento
-- **Persistencia de Datos**: Almacenamiento local de saldo, stock y recaudaciones
-- **Control de Versiones**: Auto-tagging mediante GitHub Actions
+- **Persistencia en la Nube**: Datos almacenados en MongoDB Atlas
+- **Sincronización en Tiempo Real**: Los cambios se guardan automáticamente
+
+## 📋 Requisitos Previos
+
+1. **Bun** instalado globalmente
+2. **Cuenta de MongoDB Atlas** con un cluster creado
 
 ## Instalación
 
+### 1. Clonar el repositorio
+
 ```bash
-# Clonar el repositorio
 git clone https://github.com/santimartinezzgb/maquina_vending.git
 cd maquina_vending
+```
 
-# Instalar
+### 2. Instalar dependencias
+
+```bash
 bun install
+```
 
-# Ejecutar
+### 3. Configurar MongoDB Atlas
+
+1. Crea una cuenta en [MongoDB Atlas](https://www.mongodb.com/cloud/atlas)
+2. Crea un nuevo cluster gratuito
+3. Configura el acceso:
+   - **Network Access**: Añade tu IP o `0.0.0.0/0` para desarrollo
+   - **Database Access**: Crea un usuario con permisos de lectura/escritura
+4. Obtén tu cadena de conexión
+
+### 4. Configurar variables de entorno
+
+MOdifica el un archivo `.env.example` de la raíz del proyecto:
+
+```env.example
+MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/maquinavending?retryWrites=true&w=majority
+```
+
+**Importante:** Reemplaza `usuario`, `contraseña` y `cluster` con tus credenciales reales de MongoDB Atlas.
+
+### 5. Ejecutar la aplicación
+
+```bash
+bun run start
+```
+
+O con script de inicialización:
+
+```bash
 ./start.sh
 ```
 
@@ -55,26 +99,9 @@ bun install
 
 - **Electron** v28.0.0 - Framework de aplicaciones de escritorio
 - **Bun** - Entorno de ejecución
-- **localStorage** - Persistencia de datos
+- **Mongo Atlas** - Base de datos en la nube
 - **GitHub Actions** - CI/CD para versionado automático
 
-
-## Almacenamiento Local
-
-El sistema guarda automáticamente:
-- `saldo_maquina`: Saldo actual del usuario
-- `stock_bebidas`: Inventario de cada producto
-- `precios_bebidas`: Precios configurados
-- `dinero_recaudado`: Recaudación actual
-- `total_recaudaciones`: Histórico total de recaudaciones
-
-
-## Resetear datos
-Para limpiar todos los datos almacenados:
-```javascript
-// En la consola del navegador (DevTools)
-localStorage.clear();
-```
 
 ---
 
