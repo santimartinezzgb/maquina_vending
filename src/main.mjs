@@ -4,9 +4,11 @@ import { fileURLToPath } from 'url';
 import conectarDB from './database/database.mjs';
 import * as dbOperaciones from './database/db-operations.mjs';
 
+// Obtener el directorio actual
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Hacer que la ventana principal sea una variable global
 let mainWindow;
 
 const createWindow = async () => {
@@ -36,53 +38,28 @@ const createWindow = async () => {
 
 };
 
-// HANDLERS. Sirven para comunicar la ventana con las operaciones de la base de datos
+// ipcMain.handle(). Gestiona la conexión entre el main process y el renderer process a través de canales IPC.
+// Un canal IPC es un identificador único para cada tipo de comunicación que se quiere establecer entre ambos procesos.
 
 // Stock
-ipcMain.handle('guardar-stock', async (event, stock) => {
-    await dbOperaciones.guardarStock(stock);
-});
-
-ipcMain.handle('cargar-stock', async () => {
-    return await dbOperaciones.cargarStock();
-});
+ipcMain.handle('guardar-stock', async (stock) => { await dbOperaciones.guardarStock(stock); });
+ipcMain.handle('cargar-stock', async () => { return await dbOperaciones.cargarStock(); });
 
 // Precios
-ipcMain.handle('guardar-precios', async (event, precios) => {
-    await dbOperaciones.guardarPrecios(precios);
-});
-
-ipcMain.handle('cargar-precios', async () => {
-    return await dbOperaciones.cargarPrecios();
-});
+ipcMain.handle('guardar-precios', async (precios) => { await dbOperaciones.guardarPrecios(precios); });
+ipcMain.handle('cargar-precios', async () => { return await dbOperaciones.cargarPrecios(); });
 
 // Saldo
-ipcMain.handle('guardar-saldo', async (event, saldo) => {
-    await dbOperaciones.guardarSaldo(saldo);
-});
-
-ipcMain.handle('cargar-saldo', async () => {
-    return await dbOperaciones.cargarSaldo();
-});
+ipcMain.handle('guardar-saldo', async (saldo) => { await dbOperaciones.guardarSaldo(saldo); });
+ipcMain.handle('cargar-saldo', async () => { return await dbOperaciones.cargarSaldo(); });
 
 // Dinero recaudado
-ipcMain.handle('guardar-dinero-recaudado', async (event, dinero) => {
-    await dbOperaciones.guardarDineroRecaudado(dinero);
-});
-
-ipcMain.handle('cargar-dinero-recaudado', async () => {
-    return await dbOperaciones.cargarDineroRecaudado();
-});
+ipcMain.handle('guardar-dinero-recaudado', async (dinero) => { await dbOperaciones.guardarDineroRecaudado(dinero); });
+ipcMain.handle('cargar-dinero-recaudado', async () => { return await dbOperaciones.cargarDineroRecaudado(); });
 
 // Total recaudaciones
-ipcMain.handle('guardar-total-recaudaciones', async (event, total) => {
-    await dbOperaciones.guardarTotalRecaudaciones(total);
-});
-
-ipcMain.handle('cargar-total-recaudaciones', async () => {
-    return await dbOperaciones.cargarTotalRecaudaciones();
-});
-
+ipcMain.handle('guardar-total-recaudaciones', async (total) => { await dbOperaciones.guardarTotalRecaudaciones(total); });
+ipcMain.handle('cargar-total-recaudaciones', async () => { return await dbOperaciones.cargarTotalRecaudaciones(); });
 
 
 

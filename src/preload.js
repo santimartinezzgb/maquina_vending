@@ -1,6 +1,7 @@
 const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
+
     // Gestión del stock
     guardarStock: (stock) => ipcRenderer.invoke('guardar-stock', stock),
     cargarStock: () => ipcRenderer.invoke('cargar-stock'),
