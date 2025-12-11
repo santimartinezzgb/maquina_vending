@@ -1,8 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import conectarDB from './database.mjs';
-import * as dbOps from './db-operations.mjs';
+import conectarDB from './database/database.mjs';
+import * as dbOperaciones from './database/db-operations.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -32,7 +32,7 @@ const createWindow = async () => {
     });
 
     // Cargar el archivo HTML de la interfaz
-    mainWindow.loadFile('src/ventana_principal.html');
+    mainWindow.loadFile('src/views/ventana_principal.html');
 
 };
 
@@ -40,47 +40,47 @@ const createWindow = async () => {
 
 // Stock
 ipcMain.handle('guardar-stock', async (event, stock) => {
-    await dbOps.guardarStock(stock);
+    await dbOperaciones.guardarStock(stock);
 });
 
 ipcMain.handle('cargar-stock', async () => {
-    return await dbOps.cargarStock();
+    return await dbOperaciones.cargarStock();
 });
 
 // Precios
 ipcMain.handle('guardar-precios', async (event, precios) => {
-    await dbOps.guardarPrecios(precios);
+    await dbOperaciones.guardarPrecios(precios);
 });
 
 ipcMain.handle('cargar-precios', async () => {
-    return await dbOps.cargarPrecios();
+    return await dbOperaciones.cargarPrecios();
 });
 
 // Saldo
 ipcMain.handle('guardar-saldo', async (event, saldo) => {
-    await dbOps.guardarSaldo(saldo);
+    await dbOperaciones.guardarSaldo(saldo);
 });
 
 ipcMain.handle('cargar-saldo', async () => {
-    return await dbOps.cargarSaldo();
+    return await dbOperaciones.cargarSaldo();
 });
 
 // Dinero recaudado
 ipcMain.handle('guardar-dinero-recaudado', async (event, dinero) => {
-    await dbOps.guardarDineroRecaudado(dinero);
+    await dbOperaciones.guardarDineroRecaudado(dinero);
 });
 
 ipcMain.handle('cargar-dinero-recaudado', async () => {
-    return await dbOps.cargarDineroRecaudado();
+    return await dbOperaciones.cargarDineroRecaudado();
 });
 
 // Total recaudaciones
 ipcMain.handle('guardar-total-recaudaciones', async (event, total) => {
-    await dbOps.guardarTotalRecaudaciones(total);
+    await dbOperaciones.guardarTotalRecaudaciones(total);
 });
 
 ipcMain.handle('cargar-total-recaudaciones', async () => {
-    return await dbOps.cargarTotalRecaudaciones();
+    return await dbOperaciones.cargarTotalRecaudaciones();
 });
 
 
