@@ -37,7 +37,8 @@ bun install
 
 ### Introducir dinero a la máquina
 
-<img width="1675" height="960" alt="introducir_dinero" src="https://github.com/user-attachments/assets/15d3b078-d930-4849-bfc5-aa2b8561fa87" />
+<img width="1675" height="960" alt="introducir_dinero" src="https://github.com/user-attachments/assets/5621e6a2-d318-405d-a7cc-f869feef58db" />
+
 
 
 ### Confirmación para poder gestionar la máquina
@@ -49,8 +50,7 @@ bun install
 
 ### Panel de Administración
 
-<img width="1675" height="960" alt="maquina_abierta" src="https://github.com/user-attachments/assets/2bfd8f96-b2f0-4c42-9085-9f1b7e370033" />
-
+<img width="1675" height="960" alt="maquina_abierta" src="https://github.com/user-attachments/assets/e9efef88-ae1b-49db-8161-81f2e6eb3676" />
 
 - **Ajustar Precios**: Modificar el precio de cada bebida
 - **Rellenar Stock**: Restablecer stock a 10 unidades
