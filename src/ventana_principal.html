@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>COCA-COLA VENDING MACHINE</title>
+
+    <!-- defer: Para que index.mjs carge junto con el html -->
+    <script defer src="./vista_primera.mjs"></script>
+</head>
+
+<body id="cuerpo_ventana_primera">
+
+    <!-- PANTALLA DE CARGA -->
+    <div id="pantalla_carga">
+        <div id="contenedor_carga">
+            <p id="texto_carga">Cargando...</p>
+        </div>
+    </div>
+
+    <!-- MÁQUINA -->
+    <div id="maquina">
+
+
+        <!-- Mitad derecha de la máquina -->
+        <section id="derecha_maquina">
+
+            <!-- Pantalla principal -->
+            <div id="pantalla_principal">
+                <img src="assets/images/logo-maquina.jpg" id="imagen_logo_cocacola">
+            </div>
+
+            <!-- 1ª fila de bebidas -->
+            <div id="grupo_bebidas">
+                <button id="coca_cola" class="btn_bebida"><img src="assets/images/COCA-COLA.png"
+                        alt="Coca Cola"></button>
+                <button id="coca_cola_zero" class="btn_bebida"><img src="assets/images/COCA-COLA_ZERO.png"
+                        alt="Coca Cola Zero"></button>
+                <button id="coca_cola_light" class="btn_bebida"><img src="assets/images/COCA-COLA_LIGHT.png"
+                        alt="Coca Cola Light"></button>
+                <button id="sprite" class="btn_bebida"><img src="assets/images/SPRITE.png" alt="Sprite"></button>
+                <button id="fanta" class="btn_bebida"><img src="assets/images/FANTA.png" alt="Fanta"></button>
+                <button id="nestea" class="btn_bebida"><img src="assets/images/NESTEA.png" alt="Nestea"></button>
+            </div>
+
+
+            <!-- Recoger bebidas -->
+            <div id="recoger_bebida"></div>
+
+        </section>
+
+    </div>
+
+
+    <!-- MENÚ -->
+    <div id="menu">
+
+        <p id="saldo"></p>
+
+        <section id="pantalla_interactiva">
+            <p id="mensaje">Seleccione producto</p>
+        </section>
+
+        <!-- Botón para introducir dinero -->
+        <button id="btn_introductir_dinero" class="btn_menu">Introducir dinero</button>
+
+        <!-- Botón para abrir la máquina -->
+        <button id="btn_abrir_maquina" class="btn_menu">Abrir máquina</button>
+
+        <!-- Botón para salir del programa -->
+        <button id="btn_salir" class="btn_menu">Salir</button>
+
+    </div>
+
+
+
+    <!-- PANTALLA DE DINERO -->
+    <div id="pantalla_dinero" style="display: none;">
+        <section id="contenedor_dinero">
+            <h2 style="font-size: 40px; margin-bottom: 20px;">Introducir Dinero</h2>
+            <p style="font-size: 30px; margin-bottom: 30px;">Saldo actual: <span id="saldo_actual">0.00</span>€</p>
+
+            <div id="grid_dinero">
+                <button class="btn_moneda btn_menu" data-valor="0.05">0.05€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.10">0.10€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.20">0.20€</button>
+                <button class="btn_moneda btn_menu" data-valor="0.50">0.50€</button>
+                <button class="btn_moneda btn_menu" data-valor="1.00">1.00€</button>
+                <button class="btn_moneda btn_menu" data-valor="2.00">2.00€</button>
+                <button class="btn_moneda btn_menu" data-valor="5.00">5€</button>
+                <button class="btn_moneda btn_menu" data-valor="10.00">10€</button>
+                <button class="btn_moneda btn_menu" data-valor="20.00">20€</button>
+            </div>
+
+            <button id="btn_cerrar_dinero" class="btn_menu">Cerrar</button>
+        </section>
+    </div>
+
+
+    <!-- PANTALLA DE CONFIRMACIÓN  -->
+    <div id="pantalla_confirmacion">
+        <div id="contenedor_confirmacion">
+            <p style="font-size: 40px; margin-bottom: 20px;">Confirmación para abrir la máquina</p>
+            <p style="font-size: 25px; margin-bottom: 15px;">Introduce la contraseña:</p>
+            <input type="password" id="input_contrasena" placeholder="Contraseña">
+            <div id="botones_confirmacion">
+                <button id="btn_confirmar" class="btn_menu">Confirmar</button>
+                <button id="btn_cancelar" class="btn_menu">Cancelar</button>
+            </div>
+            <p id="mensaje_error">Contraseña
+                incorrecta</p>
+        </div>
+    </div>
+
+    <!-- PANTALLA DE CARGA MIENTRAS SALE -->
+    <div id="pantalla_carga_salida">
+        <div id="contenedor_carga">
+            <p>Saliendo...</p>
+        </div>
+    </div>
+
+</body>
+
+</html>

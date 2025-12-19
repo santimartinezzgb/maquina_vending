@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Katibeh&family=Pixelify+Sans:wght@400..700&display=swap"
+        rel="stylesheet">
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <title>Gestión de Máquina - COCA-COLA</title>
+
+    <!-- defer: Para que index.mjs carge junto con el html -->
+    <script defer src="./vista_segunda.mjs"></script>
+</head>
+
+<body id="cuerpo_ventana_segunda">
+
+
+
+    <div id="ventana_gestion">
+        <div id="relleno_panel_control">
+            <h2 id="panel_control">Panel de Control</h2>
+        </div>
+
+        <section id="grupo_bebidas">
+
+            <article id="cuadro_coca_cola" class="cuadro_bebida">
+                <img src="assets/images/COCA-COLA.png" alt="Coca Cola">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
+                    <p>
+                        <span id="stock_coca_cola">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_coca_cola">Rellenar</button>
+                </span>
+            </article>
+
+            <article id="cuadro_coca_cola_zero" class="cuadro_bebida">
+                <img src="assets/images/COCA-COLA_ZERO.png" alt="Coca Cola Zero">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola_zero" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
+                    <p>
+                        <span id="stock_coca_cola_zero">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_coca_cola_zero">Rellenar</button>
+                </span>
+            </article>
+
+            <article id="cuadro_coca_cola_light" class="cuadro_bebida">
+                <img src="assets/images/COCA-COLA_LIGHT.png" alt="Coca Cola Light">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_coca_cola_light" class="input_precio" value="1.00" step="0.01"
+                            min="0">€
+                    </p>
+                    <p>
+                        <span id="stock_coca_cola_light">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_coca_cola_light">Rellenar</button>
+                </span>
+            </article>
+
+            <article id="cuadro_sprite" class="cuadro_bebida">
+                <img src="assets/images/SPRITE.png" alt="Sprite">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_sprite" class="input_precio" value="1.00" step="0.01" min="0">€
+                    </p>
+                    <p>
+                        <span id="stock_sprite">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_sprite">Rellenar</button>
+                </span>
+            </article>
+
+            <article id="cuadro_fanta" class="cuadro_bebida">
+                <img src="assets/images/FANTA.png" alt="Fanta">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_fanta" class="input_precio" value="1.00" step="0.01" min="0">€
+                    </p>
+                    <p>
+                        <span id="stock_fanta">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_fanta">Rellenar</button>
+                </span>
+            </article>
+
+            <article id="cuadro_nestea" class="cuadro_bebida">
+                <img src="assets/images/NESTEA.png" alt="Nestea">
+                <span class="contenido_refresco">
+                    <p>Precio:
+                        <input type="number" id="precio_nestea" class="input_precio" value="1.00" min="1.00">€
+                    </p>
+                    <p>
+                        <span id="stock_nestea">0</span> unidades
+                    </p>
+                    <button id="btn_rellenar_nestea">Rellenar</button>
+                </span>
+            </article>
+
+        </section>
+
+        <div id="contenedor_dinero_recaudado">
+            <p>Recaudación actual:
+                <span id="dinero_recaudado">0.00</span>€
+            </p>
+        </div>
+
+
+    </div>
+
+
+
+    <div id="menu_gestion_maquina">
+
+        <section id="total_recaudaciones">
+            <p>Total recaudado: <span id="total_recaudaciones_valor">0.00</span>€</p>
+        </section>
+
+
+        <button id="btn_retirar_dinero">Retirar Dinero</button>
+        <button id="btn_volver">Volver</button>
+
+    </div>
+
+</body>
+
+</html>

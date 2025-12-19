@@ -1,0 +1,18 @@
+{
+  "name": "maquinavending",
+  "version": "2.0.0",
+  "description": "",
+  "main": "src/main.mjs",
+  "scripts": {
+    "dev": "bun run electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^28.0.0"
+  },
+  "dependencies": {
+    "electron-reload": "^2.0.0-alpha.1"
+  }
+}
