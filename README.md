@@ -29,21 +29,28 @@ bun install
 
 ### Interfaz Principal (Cliente)
 
-<img width="1678" height="965" alt="inicio" src="https://github.com/user-attachments/assets/c8902810-bcd1-4abc-8e64-8669a9c5bdab" />
+<img width="1675" height="960" alt="pantalla_inicio" src="https://github.com/user-attachments/assets/0743b674-4ffd-4879-9732-0a7ef2339307" />
 
 1. **Introducir Dinero**: Click en el botón para agregar saldo (monedas de 0.05€ a 20€)
 2. **Seleccionar Bebida**: Click en la bebida deseada
 3. **Recoger Producto**: La bebida se expulsa si hay saldo y stock suficiente
 
+### Introducir dinero a la máquina
+
+<img width="1675" height="960" alt="introducir_dinero" src="https://github.com/user-attachments/assets/15d3b078-d930-4849-bfc5-aa2b8561fa87" />
+
+
 ### Confirmación para poder gestionar la máquina
 
 **Acceso**: Click en "Abrir máquina" → Contraseña: `1`
 
-<img width="1678" height="965" alt="autenticacion" src="https://github.com/user-attachments/assets/bd964cc6-fbcd-4f85-9af1-e02fbaa4bebc" />
+<img width="1675" height="960" alt="acceso_admin" src="https://github.com/user-attachments/assets/7ec53b7f-3343-40b7-a258-01c8584b0b0d" />
+
 
 ### Panel de Administración
 
-<img width="1678" height="965" alt="panel-de-control" src="https://github.com/user-attachments/assets/2c96c551-19d4-4d6d-845d-c901244ae069" />
+<img width="1675" height="960" alt="maquina_abierta" src="https://github.com/user-attachments/assets/2bfd8f96-b2f0-4c42-9085-9f1b7e370033" />
+
 
 - **Ajustar Precios**: Modificar el precio de cada bebida
 - **Rellenar Stock**: Restablecer stock a 10 unidades
