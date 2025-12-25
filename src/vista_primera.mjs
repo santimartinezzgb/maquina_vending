@@ -45,9 +45,6 @@ const $recoger_bebida = $('#recoger_bebida');
 const CONTRASENA_CORRECTA = "1";
 
 
-
-
-// Configuración de la URL base de la API
 const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3001/api';
 
 let stock = {
