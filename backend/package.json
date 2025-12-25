@@ -1,0 +1,13 @@
+{
+    "name": "maquina_vending_backend",
+    "type": "module",
+    "main": "server.mjs",
+    "scripts": {
+        "start": "bun server.mjs"
+    },
+    "dependencies": {
+        "express": "^5.2.1",
+        "mongoose": "^9.0.2",
+        "cors": "^2.8.5"
+    }
+}

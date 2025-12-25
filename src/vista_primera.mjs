@@ -45,26 +45,26 @@ const $recoger_bebida = $('#recoger_bebida');
 const CONTRASENA_CORRECTA = "1";
 
 
-//localStorage. Para almacenar datos persistentes entre sesiones
 
-// Cargar stock desde localStorage
-let stock = JSON.parse(localStorage.getItem('stock_bebidas')) || {
-    coca_cola: 10,
-    coca_cola_zero: 10,
-    coca_cola_light: 10,
-    sprite: 10,
-    fanta: 10,
-    nestea: 10
+
+// Configuración de la URL base de la API
+const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3001/api';
+
+let stock = {
+    coca_cola: 0,
+    coca_cola_zero: 0,
+    coca_cola_light: 0,
+    sprite: 0,
+    fanta: 0,
+    nestea: 0
 };
-
-// Cargar precios desde localStorage
-let precios = JSON.parse(localStorage.getItem('precios_bebidas')) || {
-    coca_cola: 1.50,
-    coca_cola_zero: 1.50,
-    coca_cola_light: 1.50,
-    sprite: 1.30,
-    fanta: 1.30,
-    nestea: 1.40
+let precios = {
+    coca_cola: 0,
+    coca_cola_zero: 0,
+    coca_cola_light: 0,
+    sprite: 0,
+    fanta: 0,
+    nestea: 0
 };
 
 const nombres = {
@@ -76,66 +76,124 @@ const nombres = {
     nestea: 'Nestea'
 };
 
+let saldo_cliente = 0;
+let saldo_maquina = 0;
 
-// MÉTODOS Y LÓGICA ==================================================
 
-// Saldo inicial de la máquina - cargar desde localStorage
-// || 0: evita que el saldo sea NaN si el localStorage no tiene el valor
-let saldo_maquina = parseFloat(localStorage.getItem('saldo_maquina')) || 0;
-let dinero_recaudado = parseFloat(localStorage.getItem('dinero_recaudado')) || 0;
-
-// Función para guardar saldo
-let guardarSaldo = () => {
-    localStorage.setItem('saldo_maquina', saldo_maquina.toString());
-}
-
-// Actualizar el saldo en la interfaz
-let actualizarSaldo = () => {
-    $saldo.textContent = `Saldo: ${saldo_maquina.toFixed(2)}€`;
-    guardarSaldo();
-}
-actualizarSaldo();
-
-// Función para guardar stock
-let guardarStock = () => {
-    localStorage.setItem('stock_bebidas', JSON.stringify(stock));
-}
-
-// Función para cargar stock
-let cargarStock = () => {
-    const stockGuardado = localStorage.getItem('stock_bebidas');
-    if (stockGuardado) {
-        stock = JSON.parse(stockGuardado);
+// Funciones para interactuar con la API modular
+async function cargarBebidasYPrecios() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/bebidas`);
+        if (response.ok) {
+            const bebidas = await response.json();
+            bebidas.forEach(b => {
+                stock[b.nombre] = b.stock;
+                precios[b.nombre] = b.precio;
+            });
+        } else {
+            console.error('Error al cargar bebidas desde la API');
+        }
+    } catch (error) {
+        console.error('Error de red al cargar bebidas', error);
     }
 }
 
-// Cargar stock al iniciar
-cargarStock();
+async function cargarSaldos() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/saldos`);
+        if (response.ok) {
+            const saldos = await response.json();
+            saldos.forEach(s => {
+                if (s.nombre === 'saldo_cliente') saldo_cliente = s.cantidad;
+                if (s.nombre === 'saldo_maquina') saldo_maquina = s.cantidad;
+            });
+        } else {
+            console.error('Error al cargar saldos desde la API');
+        }
+    } catch (error) {
+        console.error('Error de red al cargar saldos', error);
+    }
+}
+
+async function actualizarStockAPI(bebida_id, nuevoStock) {
+    try {
+        await fetch(`${API_BASE_URL}/bebidas/${bebida_id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stock: nuevoStock })
+        });
+    } catch (error) {
+        console.error('Error actualizando stock', error);
+    }
+}
+
+async function actualizarPrecioAPI(bebida_id, nuevoPrecio) {
+    try {
+        await fetch(`${API_BASE_URL}/bebidas/${bebida_id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ precio: nuevoPrecio })
+        });
+    } catch (error) {
+        console.error('Error actualizando precio', error);
+    }
+}
+
+async function actualizarSaldoAPI(nombre, nuevoSaldo) {
+    try {
+        await fetch(`${API_BASE_URL}/saldos/${nombre}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cantidad: nuevoSaldo })
+        });
+    } catch (error) {
+        console.error('Error actualizando saldo', error);
+    }
+}
+
+
+
+
+// MÉTODOS Y LÓGICA ==================================================
+
+
+
+async function inicializar() {
+    await cargarBebidasYPrecios();
+    await cargarSaldos();
+    actualizarSaldo();
+}
+
+function actualizarSaldo() {
+    $saldo.textContent = `Saldo: ${saldo_cliente.toFixed(2)}€`;
+}
+
+inicializar();
 
 // Función para manejar la compra de bebidas
-let comprarBebida = (bebida_id, nombre, precio) => {
+
+
+
+async function comprarBebida(bebida_id, nombre, precio) {
     if (stock[bebida_id] === 0) {
         $mensaje.innerHTML = `${nombre}<br>Stock insuficiente`;
         return;
     }
-
-    if (saldo_maquina === 0) {
+    if (saldo_cliente === 0) {
         $mensaje.innerHTML = `${nombre}<br>Precio: ${precio.toFixed(2)}€`;
-    } else if (saldo_maquina < precio) {
-        $mensaje.innerHTML = `Saldo insuficiente<br>Faltan: ${(precio - saldo_maquina).toFixed(2)}€`;
+    } else if (saldo_cliente < precio) {
+        $mensaje.innerHTML = `Saldo insuficiente<br>Faltan: ${(precio - saldo_cliente).toFixed(2)}€`;
     } else {
-
-        // Descontar el precio del saldo
-        saldo_maquina -= precio;
-        dinero_recaudado += precio;
-        localStorage.setItem('dinero_recaudado', dinero_recaudado.toString());
-        actualizarSaldo();
-
-        // Disminuir el stock de la bebida
+        // Descontar el precio del saldo del cliente y actualizar stock y saldos
+        saldo_cliente -= precio;
+        saldo_maquina += precio;
         stock[bebida_id]--;
-        guardarStock();
+        await actualizarStockAPI(bebida_id, stock[bebida_id]);
+        await actualizarSaldoAPI('saldo_cliente', saldo_cliente);
+        await actualizarSaldoAPI('saldo_maquina', saldo_maquina);
 
-        $saldo_actual.textContent = saldo_maquina.toFixed(2);
+        actualizarSaldo();
+        $saldo_actual.textContent = saldo_cliente.toFixed(2);
         $mensaje.innerHTML = `✓ ${nombre}<br>${precio.toFixed(2)} €`;
 
         // Animar el expulsor de bebidas
@@ -176,28 +234,29 @@ $nestea.addEventListener('click', () => {
     comprarBebida('nestea', nombres.nestea, precios.nestea);
 });
 
+
+
 $introducir_dinero.addEventListener('click', () => {
     $pantalla_dinero.style.display = 'flex';
-    $saldo_actual.textContent = saldo_maquina.toFixed(2);
+    $saldo_actual.textContent = saldo_cliente.toFixed(2);
 });
 
 // Seleccionar todas las monedas
 document.querySelectorAll('.btn_moneda').forEach(btn => {
-
-    btn.addEventListener('click', () => {
-
+    btn.addEventListener('click', async () => {
         // Obtener el valor de la moneda desde el atributo data-valor
         const valor = parseFloat(btn.dataset.valor);
-
-        // Actualizar el saldo de la máquina
-        saldo_maquina += valor;
+        // Actualizar el saldo del cliente y sincronizar con backend
+        saldo_cliente += valor;
+        await actualizarSaldoAPI('saldo_cliente', saldo_cliente);
         actualizarSaldo();
     });
 });
 
+
 $btn_cerrar_dinero.addEventListener('click', () => {
     $pantalla_dinero.style.display = 'none';
-    $mensaje.innerHTML = `Saldo: ${saldo_maquina.toFixed(2)}€`;
+    $mensaje.innerHTML = `Saldo: ${saldo_cliente.toFixed(2)}€`;
 });
 
 $abrir_maquina.addEventListener('click', () => {
