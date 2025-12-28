@@ -62,7 +62,10 @@
     <!-- MENÚ -->
     <div id="menu">
 
-        <p id="saldo"></p>
+        <section style="display: flex; gap: 10px; align-items: center; margin-bottom: 20px;">
+            <button id="btn_devolver_dinero">Devolver dinero</button>
+            <p id="saldo"></p>
+        </section>
 
         <section id="pantalla_interactiva">
             <p id="mensaje">Seleccione producto</p>
@@ -107,15 +110,19 @@
     <!-- PANTALLA DE CONFIRMACIÓN  -->
     <div id="pantalla_confirmacion">
         <div id="contenedor_confirmacion">
+
             <p style="font-size: 40px; margin-bottom: 20px;">Confirmación para abrir la máquina</p>
+
             <p style="font-size: 25px; margin-bottom: 15px;">Introduce la contraseña:</p>
-            <input type="password" id="input_contrasena" placeholder="Contraseña">
+
+            <input type="password" id="input_contrasena" placeholder="Contraseña" autofocus>
+
             <div id="botones_confirmacion">
                 <button id="btn_confirmar" class="btn_menu">Confirmar</button>
                 <button id="btn_cancelar" class="btn_menu">Cancelar</button>
             </div>
-            <p id="mensaje_error">Contraseña
-                incorrecta</p>
+
+            <p id="mensaje_error">Contraseña incorrecta</p>
         </div>
     </div>
 

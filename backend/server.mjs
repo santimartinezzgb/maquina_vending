@@ -5,9 +5,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-import bebidasRouter from './routes/bebidas.js';
-import saldosRouter from './routes/saldos.js';
-
 const app = express();
 app.use(express.json());
 app.use(cors());
@@ -18,5 +15,13 @@ mongoose.connect(mongoUri)
     .catch(err => console.error('Error de conexión:', err));
 
 // Rutas
-app.use('/api/bebidas', bebidasRouter);
+import saldosRouter from './routes/r_saldos.js';
+import bebidasRouter from './routes/r_bebidas.js';
+
 app.use('/api/saldos', saldosRouter);
+app.use('/api/bebidas', bebidasRouter);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor corriendo en el puerto ${PORT}`);
+});

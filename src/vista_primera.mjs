@@ -1,283 +1,258 @@
-// Para seleccionar elementos del DOM
-const $ = selector => document.querySelector(selector);
+// = = = = = CONFIGURACIÓN API = = = = = //
+const API_URL = 'http://localhost:3000/api';
+const CONTRASENA_ADMIN = '1234';
 
-
-// VARIABLES Y LISTAS ==========================================
-const $pantalla_carga = $('#pantalla_carga');
-const $pantalla_carga_salida = $('#pantalla_carga_salida');
-
-// Ocultar pantalla de carga después de 2 segundos
-// Se utilza para acompañar la carga de datos
-setTimeout(() => {
-    $pantalla_carga.style.display = 'none';
-}, 2000);
-
-// Elementos de la interfaz principal
-const $mensaje = $('#mensaje');
-const $coca_cola = $('#coca_cola');
-const $coca_cola_zero = $('#coca_cola_zero');
-const $coca_cola_light = $('#coca_cola_light');
-const $sprite = $('#sprite');
-const $fanta = $('#fanta');
-const $nestea = $('#nestea');
-
-const $introducir_dinero = $('#btn_introductir_dinero')
-const $saldo = $('#saldo');
-const $abrir_maquina = $('#btn_abrir_maquina')
-const $salir = $('#btn_salir');
-
-// Elementos de la pantalla de confirmación
-const $pantalla_confirmacion = $('#pantalla_confirmacion');
-const $btn_confirmar = $('#btn_confirmar');
-const $btn_cancelar = $('#btn_cancelar');
-const $input_contrasena = $('#input_contrasena');
-const $mensaje_error = $('#mensaje_error');
-
-// Elementos de la ventana de dinero
-const $pantalla_dinero = $('#pantalla_dinero');
-const $btn_cerrar_dinero = $('#btn_cerrar_dinero');
-const $saldo_actual = $('#saldo_actual');
-
-// Elemento expulsor de bebidas
-const $recoger_bebida = $('#recoger_bebida');
-
-// Contraseña para abrir la máquina
-const CONTRASENA_CORRECTA = "1";
-
-
-const API_BASE_URL = window.API_BASE_URL || 'http://localhost:3001/api';
-
-let stock = {
-    coca_cola: 0,
-    coca_cola_zero: 0,
-    coca_cola_light: 0,
-    sprite: 0,
-    fanta: 0,
-    nestea: 0
-};
-let precios = {
-    coca_cola: 0,
-    coca_cola_zero: 0,
-    coca_cola_light: 0,
-    sprite: 0,
-    fanta: 0,
-    nestea: 0
-};
-
-const nombres = {
-    coca_cola: 'Coca-Cola',
-    coca_cola_zero: 'Coca-Cola Zero',
-    coca_cola_light: 'Coca-Cola Light',
-    sprite: 'Sprite',
-    fanta: 'Fanta',
-    nestea: 'Nestea'
-};
-
-let saldo_cliente = 0;
-let saldo_maquina = 0;
-
-
-// Funciones para interactuar con la API modular
-async function cargarBebidasYPrecios() {
+// = = = = = MÉTODOS API = = = = = //
+const cargarSaldoCliente = async (nombre) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/bebidas`);
-        if (response.ok) {
-            const bebidas = await response.json();
-            bebidas.forEach(b => {
-                stock[b.nombre] = b.stock;
-                precios[b.nombre] = b.precio;
-            });
-        } else {
-            console.error('Error al cargar bebidas desde la API');
+        const response = await fetch(`${API_URL}/saldos/${nombre}`);
+        if (!response.ok) throw new Error('Error al obtener el saldo');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const cargarBebidas = async () => {
+    try {
+        const response = await fetch(`${API_URL}/bebidas`);
+        if (!response.ok) throw new Error('Error al obtener las bebidas');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}
+
+const actualizarSaldo = async (nombre, nuevaCantidad) => {
+    try {
+        const response = await fetch(`${API_URL}/saldos/${nombre}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cantidad: nuevaCantidad })
+        });
+        if (!response.ok) throw new Error('Error al actualizar el saldo');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+const actualizarBebida = async (nombre, datos) => {
+    try {
+        const response = await fetch(`${API_URL}/bebidas/${nombre}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+        if (!response.ok) throw new Error('Error al actualizar la bebida');
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return null;
+    }
+}
+
+// = = = = = VARIABLES GLOBALES = = = = = //
+let saldo_actual = 0;
+let bebidas = [];
+
+// = = = = = ELEMENTOS DEL DOM = = = = = //
+const elementos = {
+    pantallaCarga: document.getElementById('pantalla_carga'),
+    saldo: document.getElementById('saldo'),
+    mensaje: document.getElementById('mensaje'),
+    pantalla_dinero: document.getElementById('pantalla_dinero'),
+    saldo_actual: document.getElementById('saldo_actual'),
+    pantalla_confirmacion: document.getElementById('pantalla_confirmacion'),
+    input_contrasena: document.getElementById('input_contrasena'),
+    mensaje_error: document.getElementById('mensaje_error'),
+    pantalla_carga_salida: document.getElementById('pantalla_carga_salida'),
+    recoger_bebida: document.getElementById('recoger_bebida')
+};
+
+// = = = = = INICIALIZACIÓN = = = = = //
+const inicializar = async () => {
+    try {
+        // Cargar datos desde la API
+        const datos_saldo = await cargarSaldoCliente('saldo_cliente');
+        bebidas = await cargarBebidas();
+
+        if (datos_saldo) {
+            saldo_actual = datos_saldo.cantidad;
+            actualizarUISaldo();
         }
+
+        // Ocultar pantalla de carga
+        setTimeout(() => {
+            elementos.pantallaCarga.style.display = 'none';
+        }, 1500);
+
+        configurarEventos();
     } catch (error) {
-        console.error('Error de red al cargar bebidas', error);
+        console.error('Error al inicializar:', error);
+        elementos.mensaje.textContent = 'Error al cargar datos';
     }
 }
 
-async function cargarSaldos() {
-    try {
-        const response = await fetch(`${API_BASE_URL}/saldos`);
-        if (response.ok) {
-            const saldos = await response.json();
-            saldos.forEach(s => {
-                if (s.nombre === 'saldo_cliente') saldo_cliente = s.cantidad;
-                if (s.nombre === 'saldo_maquina') saldo_maquina = s.cantidad;
-            });
-        } else {
-            console.error('Error al cargar saldos desde la API');
-        }
-    } catch (error) {
-        console.error('Error de red al cargar saldos', error);
-    }
+// = = = = = ACTUALIZAR UI = = = = = //
+const actualizarUISaldo = () => {
+    elementos.saldo.textContent = `Saldo: ${saldo_actual.toFixed(2)}€`;
+    elementos.saldo_actual.textContent = saldo_actual.toFixed(2);
 }
 
-async function actualizarStockAPI(bebida_id, nuevoStock) {
-    try {
-        await fetch(`${API_BASE_URL}/bebidas/${bebida_id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ stock: nuevoStock })
-        });
-    } catch (error) {
-        console.error('Error actualizando stock', error);
-    }
+const mostrarMensaje = (texto, color = '#00ff00') => {
+    elementos.mensaje.textContent = texto;
+    elementos.mensaje.style.color = color;
+    setTimeout(() => {
+        elementos.mensaje.textContent = 'Seleccione producto';
+        elementos.mensaje.style.color = '#00ff00';
+    }, 3000);
 }
 
-async function actualizarPrecioAPI(bebida_id, nuevoPrecio) {
-    try {
-        await fetch(`${API_BASE_URL}/bebidas/${bebida_id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ precio: nuevoPrecio })
-        });
-    } catch (error) {
-        console.error('Error actualizando precio', error);
-    }
-}
+// = = = = = COMPRAR BEBIDA = = = = = //
+const comprarBebida = async (nombreBebida) => {
+    const bebida = bebidas.find(b => b.nombre === nombreBebida);
 
-async function actualizarSaldoAPI(nombre, nuevoSaldo) {
-    try {
-        await fetch(`${API_BASE_URL}/saldos/${nombre}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ cantidad: nuevoSaldo })
-        });
-    } catch (error) {
-        console.error('Error actualizando saldo', error);
-    }
-}
-
-
-
-
-// MÉTODOS Y LÓGICA ==================================================
-
-
-
-async function inicializar() {
-    await cargarBebidasYPrecios();
-    await cargarSaldos();
-    actualizarSaldo();
-}
-
-function actualizarSaldo() {
-    $saldo.textContent = `Saldo: ${saldo_cliente.toFixed(2)}€`;
-}
-
-inicializar();
-
-// Función para manejar la compra de bebidas
-
-
-
-async function comprarBebida(bebida_id, nombre, precio) {
-    if (stock[bebida_id] === 0) {
-        $mensaje.innerHTML = `${nombre}<br>Stock insuficiente`;
+    if (!bebida) {
+        mostrarMensaje('Bebida no encontrada', '#ff0000');
         return;
     }
-    if (saldo_cliente === 0) {
-        $mensaje.innerHTML = `${nombre}<br>Precio: ${precio.toFixed(2)}€`;
-    } else if (saldo_cliente < precio) {
-        $mensaje.innerHTML = `Saldo insuficiente<br>Faltan: ${(precio - saldo_cliente).toFixed(2)}€`;
+
+    if (bebida.stock <= 0) {
+        mostrarMensaje('Sin stock disponible', '#ff0000');
+        return;
+    }
+
+    if (saldo_actual < bebida.precio) {
+        mostrarMensaje(`Saldo insuficiente. Precio: ${bebida.precio.toFixed(2)}€`, '#ff0000');
+        return;
+    }
+
+    // Realizar compra
+    await actualizarBebida(bebida.nombre, { stock: bebida.stock - 1 });
+    saldo_actual -= bebida.precio;
+    await actualizarSaldo('saldo_cliente', saldo_actual);
+
+    // Actualizar saldos de máquina
+    const saldoMaquina = await cargarSaldoCliente('saldo_maquina');
+    await actualizarSaldo('saldo_maquina', saldoMaquina.cantidad + bebida.precio);
+
+    // Actualizar UI
+    actualizarUISaldo();
+    bebida.stock--;
+    mostrarMensaje('¡Disfruta tu bebida!', '#00ff00');
+
+    // Animación de bebida
+    elementos.recoger_bebida.style.backgroundColor = '#ff0000';
+    setTimeout(() => {
+        elementos.recoger_bebida.style.backgroundColor = 'black';
+    }, 2000);
+}
+
+// = = = = = INTRODUCIR DINERO = = = = = //
+const abrirPantallaDinero = () => {
+    elementos.pantalla_dinero.style.display = 'flex';
+}
+
+const cerrarPantallaDinero = () => {
+    elementos.pantalla_dinero.style.display = 'none';
+}
+
+const introducirDinero = async (valor) => {
+    saldo_actual += parseFloat(valor);
+    await actualizarSaldo('saldo_cliente', saldo_actual);
+    actualizarUISaldo();
+    mostrarMensaje(`Se han añadido ${valor}€`, '#00ff00');
+}
+
+// = = = = = ABRIR MÁQUINA (ADMIN) = = = = = //
+const abrirPantallaConfirmacion = () => {
+    elementos.pantalla_confirmacion.style.display = 'flex';
+    elementos.input_contrasena.value = '';
+    elementos.mensaje_error.style.display = 'none';
+}
+
+const cerrarPantallaConfirmacion = () => {
+    elementos.pantalla_confirmacion.style.display = 'none';
+    elementos.input_contrasena.value = '';
+    elementos.mensaje_error.style.display = 'none';
+}
+
+const confirmarContrasena = () => {
+    const contrasena = elementos.input_contrasena.value;
+
+    if (contrasena === CONTRASENA_ADMIN) {
+        cerrarPantallaConfirmacion();
+        abrirMaquina();
     } else {
-        // Descontar el precio del saldo del cliente y actualizar stock y saldos
-        saldo_cliente -= precio;
-        saldo_maquina += precio;
-        stock[bebida_id]--;
-        await actualizarStockAPI(bebida_id, stock[bebida_id]);
-        await actualizarSaldoAPI('saldo_cliente', saldo_cliente);
-        await actualizarSaldoAPI('saldo_maquina', saldo_maquina);
-
-        actualizarSaldo();
-        $saldo_actual.textContent = saldo_cliente.toFixed(2);
-        $mensaje.innerHTML = `✓ ${nombre}<br>${precio.toFixed(2)} €`;
-
-        // Animar el expulsor de bebidas
-        $recoger_bebida.style.backgroundColor = '#00ff00';
-        $recoger_bebida.style.boxShadow = '0 0 20px #00ff00';
-        $recoger_bebida.textContent = '¡Recoge tu bebida!';
-
-        setTimeout(() => {
-            $recoger_bebida.style.backgroundColor = '';
-            $recoger_bebida.style.boxShadow = '';
-            $recoger_bebida.textContent = '';
-        }, 3000);
+        elementos.mensaje_error.style.display = 'block';
     }
 }
 
-$coca_cola.addEventListener('click', () => {
-    comprarBebida('coca_cola', nombres.coca_cola, precios.coca_cola);
+const abrirMaquina = () => {
+    // Redirigir al panel de administración
+    window.location.href = 'ventana_segunda.html';
+}
 
-});
-
-$coca_cola_zero.addEventListener('click', () => {
-    comprarBebida('coca_cola_zero', nombres.coca_cola_zero, precios.coca_cola_zero);
-});
-
-$coca_cola_light.addEventListener('click', () => {
-    comprarBebida('coca_cola_light', nombres.coca_cola_light, precios.coca_cola_light);
-});
-
-$sprite.addEventListener('click', () => {
-    comprarBebida('sprite', nombres.sprite, precios.sprite);
-});
-
-$fanta.addEventListener('click', () => {
-    comprarBebida('fanta', nombres.fanta, precios.fanta);
-});
-
-$nestea.addEventListener('click', () => {
-    comprarBebida('nestea', nombres.nestea, precios.nestea);
-});
-
-
-
-$introducir_dinero.addEventListener('click', () => {
-    $pantalla_dinero.style.display = 'flex';
-    $saldo_actual.textContent = saldo_cliente.toFixed(2);
-});
-
-// Seleccionar todas las monedas
-document.querySelectorAll('.btn_moneda').forEach(btn => {
-    btn.addEventListener('click', async () => {
-        // Obtener el valor de la moneda desde el atributo data-valor
-        const valor = parseFloat(btn.dataset.valor);
-        // Actualizar el saldo del cliente y sincronizar con backend
-        saldo_cliente += valor;
-        await actualizarSaldoAPI('saldo_cliente', saldo_cliente);
-        actualizarSaldo();
-    });
-});
-
-
-$btn_cerrar_dinero.addEventListener('click', () => {
-    $pantalla_dinero.style.display = 'none';
-    $mensaje.innerHTML = `Saldo: ${saldo_cliente.toFixed(2)}€`;
-});
-
-$abrir_maquina.addEventListener('click', () => {
-    $pantalla_confirmacion.style.display = 'flex';
-    $input_contrasena.value = '';
-    $mensaje_error.style.display = 'none';
-});
-
-$btn_cancelar.addEventListener('click', () => {
-    $pantalla_confirmacion.style.display = 'none';
-});
-
-$btn_confirmar.addEventListener('click', () => {
-    if ($input_contrasena.value === CONTRASENA_CORRECTA) {
-        $pantalla_confirmacion.style.display = 'none';
-        window.location.href = 'ventana_segunda.html';
-    } else {
-        $mensaje_error.style.display = 'block';
-    }
-});
-
-$salir.addEventListener('click', () => {
-    $pantalla_carga_salida.style.display = 'flex';
+// = = = = = SALIR = = = = = //
+const salir = () => {
+    elementos.pantalla_carga_salida.style.display = 'flex';
     setTimeout(() => {
         window.close();
     }, 2000);
-});
+}
+
+// = = = = = CONFIGURAR EVENTOS = = = = = //
+const configurarEventos = () => {
+
+    // Botones de bebidas
+    document.getElementById('coca_cola').addEventListener('click', () => comprarBebida('Cola-cola'));
+    document.getElementById('coca_cola_zero').addEventListener('click', () => comprarBebida('Coca-cola Zero'));
+    document.getElementById('coca_cola_light').addEventListener('click', () => comprarBebida('Coca-cola Light'));
+    document.getElementById('sprite').addEventListener('click', () => comprarBebida('Sprite'));
+    document.getElementById('fanta').addEventListener('click', () => comprarBebida('Fanta'));
+    document.getElementById('nestea').addEventListener('click', () => comprarBebida('Nestea'));
+
+    // Boton devolver dinero
+    document.getElementById('btn_devolver_dinero').addEventListener('click', async () => {
+        if (saldo_actual > 0) {
+            mostrarMensaje(`Se han devuelto ${saldo_actual.toFixed(2)}€`, '#00ff00');
+            saldo_actual = 0;
+            await actualizarSaldo('saldo_cliente', saldo_actual);
+            actualizarUISaldo();
+        } else {
+            mostrarMensaje('No hay saldo para devolver', '#ff0000');
+        }
+    });
+
+    // Botón introducir dinero
+    document.getElementById('btn_introductir_dinero').addEventListener('click', abrirPantallaDinero);
+    document.getElementById('btn_cerrar_dinero').addEventListener('click', cerrarPantallaDinero);
+
+    // Botones de monedas
+    document.querySelectorAll('.btn_moneda').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            const valor = e.target.getAttribute('data-valor');
+            introducirDinero(valor);
+        });
+    });
+
+    // Botón abrir máquina
+    document.getElementById('btn_abrir_maquina').addEventListener('click', abrirPantallaConfirmacion);
+    document.getElementById('btn_confirmar').addEventListener('click', confirmarContrasena);
+    document.getElementById('btn_cancelar').addEventListener('click', cerrarPantallaConfirmacion);
+
+    // Botón salir
+    document.getElementById('btn_salir').addEventListener('click', salir);
+
+    // Enter en el input de contraseña
+    elementos.input_contrasena.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') confirmarContrasena();
+    });
+}
+
+// = = = = = INICIAR APLICACIÓN = = = = = //
+inicializar()
