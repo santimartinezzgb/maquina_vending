@@ -8,7 +8,7 @@ Simulador de máquina expendedora de bebidas Coca-Cola desarrollado con Electron
 - **Sistema de Pago**: Introducir monedas y billetes virtuales
 - **Gestión de Stock**: Control de inventario por producto
 - **Panel de Administración**: Configuración de precios y reabastecimiento
-- **Persistencia de Datos**: Almacenamiento local de saldo, stock y recaudaciones
+- **Persistencia de Datos**: Almacenamiento en MongoDB de bebidas y saldos
 - **Control de Versiones**: Auto-tagging mediante GitHub Actions
 
 ## Instalación
@@ -62,7 +62,7 @@ bun install
 
 - **Electron** v28.0.0 - Framework de aplicaciones de escritorio
 - **Bun** - Entorno de ejecución
-- **localStorage** - Persistencia de datos
+- **MongoDB** - Base de datos
 - **GitHub Actions** - CI/CD para versionado automático
 
 
@@ -75,13 +75,6 @@ El sistema guarda automáticamente:
 - `dinero_recaudado`: Recaudación actual
 - `total_recaudaciones`: Histórico total de recaudaciones
 
-
-## Resetear datos
-Para limpiar todos los datos almacenados:
-```javascript
-// En la consola del navegador (DevTools)
-localStorage.clear();
-```
 
 ---
 
